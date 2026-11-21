@@ -83,6 +83,15 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .rows{height:660px;overflow-y:auto}
 .tablex{overflow-x:auto}
 .tablex > *{min-width:1340px}
+.tablex.fit{overflow-x:hidden}
+.tablex.fit > *{min-width:0}
+.tablex.fit .c{overflow:hidden;padding-right:10px;box-sizing:border-box}
+.tablex.fit .c:first-child{padding-right:0}
+.tablex.fit .thead .c{white-space:normal}
+.tablex.fit .row .c > span{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.tablex.fit .row .c > span[style*="display:flex"]{flex-wrap:nowrap}
+.tablex.fit .csr{flex-direction:column;align-items:flex-start;justify-content:center;gap:1px}
+.tablex.fit .csr .a,.tablex.fit .csr .b{max-width:100%;white-space:nowrap;line-height:13px}
 .row{height:36px;border-bottom:1px solid var(--line);position:relative}
 .row:hover{background:#fafafa}
 .cb{width:16px;height:16px;border-radius:4px;border:1.5px solid #bdbdbd;background:#fff;display:grid;place-items:center}
@@ -568,8 +577,9 @@ function register(key){
       ...FLAG.map(r => ({name:r[0], id:r[1], model:r[2], plate:r[3], trips:r[4], shift:r[5], safety:r[6], pills:r[7], sev:r[8], cs:r[9], last:r[10], flag:1}))].filter(r => isFlag(r.name, 1))
     : sc.rows.map(r => ({sno:r[0], name:r[1], id:r[2], model:r[3], plate:r[4], trip:r[5], trips:r[6], shift:r[7], safety:r[8], pills:r[9], sev:r[10], cs:r[11], flag:r[12]}));
   const vis = rows.filter(matches);
-  const W = sc.flagged ? [26,200,165,90,95,122,203,109,145] : [26,40,200,165,100,90,86,122,203,109,145];
-  const flagX = sc.flagged ? 216 : 256;
+  const W = sc.flagged ? [26,190,140,60,70,75,200,90,130] : [26,40,200,165,100,90,86,122,203,109,145];
+  const flagX = sc.flagged ? 206 : 256;
+  const cs = i => sc.flagged && i > 1 ? `flex:${W[i]} 1 0;min-width:0` : `width:${W[i]}px`;
   const allSel = vis.length && vis.every(r => S.sel.has(r.name));
   const hdr = (label, k) => k ? `<button data-filter="${k}" class="${S.filters[k]?"act":""}">${label}</button>` : label;
   const H = sc.flagged ? ["", "Driver","Vehicle","Trips (7D)",hdr("Shift score ▾","shift"),hdr("Safety score ▾","safety"),hdr("Triggers / reasons ▾","trig"),hdr("Severity ▾","sev"),hdr("Counselling status ▾","cs")]
@@ -597,7 +607,7 @@ function register(key){
     ];
     if (sc.flagged) cells[6] = `<span style="display:flex;gap:6px">${cells[6]}</span>`;
     const open = S.open === r.name;
-    return `<div class="row ${open?"open":""}" data-row="${esc(r.name)}">${cells.map((c,i) => `<div class="c${sc.flagged&&i===8?" csr":""}${i===(sc.flagged?2:3)?" vehc":""}" style="width:${W[i]}px"${i===(sc.flagged?2:3)?` title="${esc(r.model)} · ${esc(r.plate)}"`:""}>${c}</div>`).join("")}
+    return `<div class="row ${open?"open":""}" data-row="${esc(r.name)}">${cells.map((c,i) => `<div class="c${sc.flagged&&i===8?" csr":""}${i===(sc.flagged?2:3)?" vehc":""}" style="${cs(i)}"${i===(sc.flagged?2:3)?` title="${esc(r.model)} · ${esc(r.plate)}"`:""}>${c}</div>`).join("")}
       <button class="flag ${fl?"on":""}" style="left:${flagX}px" data-flag="${esc(r.name)}" aria-label="${fl?"Remove flag":"Flag driver"}">${IC.flagBlk}${IC.flagRed}</button></div>${open ? expandHtml(r) : ""}`;
   };
   const toolbar = S.sel.size ? `<div class="tb"><div class="l"><span class="cnt">${S.sel.size} selected</span><button class="clr" data-clear>Clear selection</button>${S.saved?'<span class="saved">Action saved</span>':""}</div>
@@ -613,7 +623,7 @@ function register(key){
       <div class="tright"><label class="rsearch">${IC.srch("#8F8F8F")}<input id="rq" placeholder="Search driver, cab, vendor..." value="${esc(S.q)}" autocomplete="off"></label><div class="fbtn">${IC.filt}</div></div></div>
     <div class="wrap"><div class="card">
       ${toolbar}
-      <div class="tablex" id="tablex"><div><div class="thead">${H.map((h,i) => `<div class="c" style="width:${W[i]}px">${i===0 ? cb(allSel, 'data-selall aria-label="Select all visible drivers"') : h}</div>`).join("")}</div>
+      <div class="tablex${sc.flagged?" fit":""}" id="tablex"><div><div class="thead">${H.map((h,i) => `<div class="c" style="${cs(i)}">${i===0 ? cb(allSel, 'data-selall aria-label="Select all visible drivers"') : h}</div>`).join("")}</div>
       <div class="rows" id="rows">${vis.map(rowHtml).join("")}${vis.length ? "" : '<div class="empty">No drivers match these filters. Reset filters to see the full list.</div>'}</div></div></div>
       ${foot}
       ${S.open && vis.some(r => r.name === S.open) ? '<div class="tscrim" data-collapse aria-hidden="true"></div>' : ""}
