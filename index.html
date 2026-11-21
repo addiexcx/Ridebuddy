@@ -20,7 +20,9 @@ html,body{margin:0;background:#fff;font-family:var(--font);color:var(--ink);-web
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:left}
 :focus-visible{outline:2px solid var(--navy);outline-offset:2px}
 .stage{padding:0;display:flex;justify-content:center}
-.app{position:relative;width:1680px;display:flex;background:#fff;overflow:hidden;flex:none}
+.app{position:relative;width:100%;max-width:1680px;min-width:1200px;display:flex;background:#fff;overflow:hidden;flex:none}
+.app-inner{display:flex;width:100%}
+.main{min-width:0}
 /* Left menu */
 .left{width:240px;flex:none;display:flex;flex-direction:column;gap:4px;padding:16px;border-right:1px solid var(--line);background:#fff}
 .brand{display:flex;align-items:center;gap:10px;padding:4px;height:40px}
@@ -79,6 +81,8 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .thead .c button:hover,.thead .c button.act{color:var(--ink)}
 .c{flex:none;display:flex;align-items:center;gap:8px;white-space:nowrap}
 .rows{height:660px;overflow-y:auto}
+.tablex{overflow-x:auto}
+.tablex > *{min-width:1340px}
 .row{height:36px;border-bottom:1px solid var(--line);position:relative}
 .row:hover{background:#fafafa}
 .cb{width:16px;height:16px;border-radius:4px;border:1.5px solid #bdbdbd;background:#fff;display:grid;place-items:center}
@@ -127,19 +131,20 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .shd h2{margin:0;font-size:22px;font-weight:600;letter-spacing:-.003em;line-height:27px;color:#000}
 .shd p{margin:4px 0 0;font-size:12px;color:var(--g5e);line-height:15px}
 .kpis{display:flex}
-.kpi{display:flex;flex-direction:column;gap:10px;padding-left:24px;border-left:1px solid var(--line);width:346.33px}
-.kpi:first-child{padding-left:0;border-left:0;width:321px}
+.kpi{display:flex;flex-direction:column;gap:10px;padding-left:24px;border-left:1px solid var(--line);flex:1 1 0;min-width:0}
+.kpi:first-child{padding-left:0;border-left:0}
 .kpi .in{display:flex;flex-direction:column;gap:6px}
 .kl{font-size:10px;font-weight:500;color:var(--g5e);letter-spacing:.08em;text-transform:uppercase;line-height:12px}
 .kv{font-size:28px;font-weight:600;letter-spacing:-.005em;line-height:34px;color:#000}
 .ks{font-size:12px;color:var(--g5e);line-height:15px}
 .bar{width:80px;height:4px;border-radius:2px}
 .tiles{display:flex;gap:12px;padding-top:4px}
-.tile{width:331px;background:var(--tile);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.tile{flex:1 1 0;min-width:0;background:var(--tile);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
 .tile .v{font-size:22px;font-weight:600;line-height:27px;color:#000}
 .two{display:flex;border-bottom:1px solid var(--line)}
-.col{width:719.5px;padding:32px 40px;display:flex;flex-direction:column;gap:18px}
-.col + .col{width:720.5px;border-left:1px solid var(--line)}
+.col{flex:1 1 0;min-width:0;padding:32px 40px;display:flex;flex-direction:column;gap:18px}
+.col + .col{border-left:1px solid var(--line)}
+.col > svg{width:100%;height:auto}
 .legend{display:flex;gap:16px;align-items:center}
 .lg{display:flex;align-items:center;gap:6px;font-size:12px;color:#000}
 .lg i{width:16px;height:16px;border-radius:4px;display:grid;place-items:center}
@@ -148,7 +153,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .trh{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
 .trh div{font-size:10px;font-weight:500;color:var(--g5e);letter-spacing:.08em;text-transform:uppercase;line-height:13px}
 .tr{display:flex;gap:12px;padding:12px 0;align-items:center;border-bottom:1px solid var(--line);height:56px}
-.w374{width:373.5px}.w50{width:50px;text-align:right}.w60{width:60px;text-align:right}.w120{width:120px}
+.w374{flex:1;min-width:0}.w50{width:50px;text-align:right}.w60{width:60px;text-align:right}.w120{width:120px}
 .tr b{display:block;font-size:13px;font-weight:600;color:#000;line-height:16px}
 .tr small{display:block;font-size:11px;color:var(--g5e);line-height:13px;margin-top:2px}
 .tr .s{font-size:14px;font-weight:600}
@@ -158,7 +163,9 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .ovl{position:absolute;inset:0;z-index:10;display:none}
 .ovl.show{display:block}
 .dim{position:absolute;inset:0;background:rgba(0,0,0,.4)}
-.dlg{position:absolute;left:480px;top:319px;width:720px;background:#fff;border-radius:16px;box-shadow:0 16px 48px rgba(0,0,0,.3);padding:24px 28px;display:flex;flex-direction:column;gap:18px}
+.ovl.mod{position:fixed}
+.ovl.mod.show{display:flex;align-items:center;justify-content:center}
+.dlg{position:relative;width:720px;background:#fff;border-radius:16px;box-shadow:0 16px 48px rgba(0,0,0,.3);padding:24px 28px;display:flex;flex-direction:column;gap:18px}
 .dh{display:flex;justify-content:space-between;align-items:center}
 .dh h2{margin:0;font-size:19px;font-weight:600;line-height:23px}
 .dh p{margin:4px 0 0;font-size:12.5px;color:var(--g5e);line-height:15px}
@@ -274,7 +281,7 @@ textarea{width:664px;height:87px;background:#fff;border:1px solid var(--line2);b
 .kstrip .kl2{font-size:10px;font-weight:500;color:#8a8a8a;letter-spacing:.08em;line-height:12px}
 .kstrip .kv2{font-size:20px;font-weight:600;line-height:24px}
 .pcols{display:flex;gap:16px;align-items:flex-start}
-.pleft{width:914px;display:flex;flex-direction:column;gap:16px}
+.pleft{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:16px}
 .pcard{background:#fff;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:16px;position:relative}
 .phd{display:flex;justify-content:space-between;align-items:center;height:38px}
 .phd h3{margin:0;font-size:16px;font-weight:600;line-height:19px}
@@ -298,7 +305,7 @@ textarea{width:664px;height:87px;background:#fff;border:1px solid var(--line2);b
 .ppop .bd{width:18px;height:18px;border-radius:9px;background:#0f0f0f;color:#fff;font-size:10px;font-weight:600;display:grid;place-items:center}
 .ppop .tg{background:#fce8ee;color:#c0264a;border-radius:6px;padding:2px 7px;font-size:11.5px;font-weight:500;line-height:14px}
 .ppop .tx{font-size:12.5px;font-weight:500;line-height:1.4}
-.prail{width:430px;display:flex;flex-direction:column;gap:12px}
+.prail{width:430px;flex:0 1 430px;min-width:320px;display:flex;flex-direction:column;gap:12px}
 .pcat{background:#fff;border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
 .pcat .t{font-size:14px;font-weight:600;line-height:17px}
 .pcat .sv{display:flex;justify-content:space-between;align-items:flex-start;height:40px}
@@ -320,11 +327,24 @@ textarea{width:664px;height:87px;background:#fff;border:1px solid var(--line2);b
 .clh{padding:10px 0;border-bottom:1px solid #e0e0e0}
 .clh div{font-size:10px;font-weight:500;color:#8a8a8a;letter-spacing:.08em;line-height:12px}
 .clr{padding:14px 0;border-bottom:1px solid #ececec;min-height:49px}
-.clr > div{flex:none;padding-right:12px}
+.clr > div{padding-right:12px;min-width:0}
+.clh > div{min-width:0;padding-right:12px}
 .clr .dt{font-size:12.5px;font-weight:500}
 .clr .rs{font-size:13px;font-weight:600}
 .clr .ss,.clr .cb2{font-size:13px}
 .clr .nt{font-size:12px;color:#5e5e5e;padding-right:0}
+.sstw{position:relative;width:min(100%, 800px)}
+.sstw > svg,.pcard > svg{width:100%;height:auto;display:block}
+
+/* laptop widths: let headers and legends wrap instead of overflowing */
+.phd{height:auto;min-height:38px;flex-wrap:wrap;gap:12px}
+.phd > div:first-child{flex:1 1 300px;min-width:0}
+.rng{flex:none}
+.plg{height:auto;flex-wrap:wrap;gap:10px 20px}
+.prg{flex-wrap:wrap;row-gap:8px}
+.prail{flex:0 0 clamp(320px, 26vw, 430px);width:auto;min-width:0}
+.w120{width:auto;min-width:120px;flex:none}
+.clh > div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style>
 </head>
 <body>
@@ -499,7 +519,7 @@ function overview(){
     <div class="trh"><div class="w374">Driver</div><div class="w50">Score</div><div class="w60">30 days</div><div class="w120">${last}</div></div>
     ${rows.map(r => `<div class="tr"><div class="w374"><b>${r[0]}</b><small>${r[1]}</small></div><div class="w50 s" style="color:${sc}">${r[2]}</div><div class="w60 d" style="color:${dc}">${r[3]}</div><div class="w120">${r[4]}</div></div>`).join("")}
   </div>`;
-  return `<div class="app-inner" style="display:flex;width:1680px;height:1503px">${leftMenu("overview")}<div class="main">
+  return `<div class="app-inner" style="min-height:1503px">${leftMenu("overview")}<div class="main">
     ${topbars("Last 1 week").replace('background:#d9d9d9','')}
     <div class="oh"><div><h1>Driver overview</h1><p>184 drivers across 6 fleet vendors · updated 23 Oct, 10:30</p></div><div style="display:flex;gap:8px;align-items:center"><button class="btn">Export</button><button class="btn pri">Run weekly review</button></div></div>
     <div class="osec">
@@ -583,15 +603,15 @@ function register(key){
   const flagTotal = 44 + flagOrder.filter(n => flags[n]).length - FLAG.filter(r => flags[r[0]] === false).length;
   const foot = sc.flagged ? `<div class="foot"><span class="t">Showing 1 to ${Math.min(20, vis.length)} of ${flagTotal} flagged drivers</span><div class="pager"><span class="rowsl">Rows</span><span class="pg pgw">10</span><span class="pg pgw on">20</span><span class="pg pgw">50</span><span style="width:10px"></span><span class="pg">‹</span><span class="pg on">1</span><span class="pg">2</span><span class="pg">3</span><span class="pg">›</span></div></div>`
     : `<div class="foot"><span class="t">${sc.foot}</span><div class="pager">${sc.pages.map((p,i) => `<span class="pg ${i===1?"on":""} ${p==="…"?"dots":""}">${p}</span>`).join("")}</div></div>`;
-  return `<div class="app-inner" style="display:flex;width:1680px;height:1080px">${leftMenu("register")}<div class="main">
+  return `<div class="app-inner" style="min-height:1080px">${leftMenu("register")}<div class="main">
     ${topbars("Last 12 weeks")}
     <div class="ph"><h1>Driver Register</h1><p>Fleet roster with live safety signals. Pick a flagged or due driver and start counselling from here.</p></div>
     <div class="tabsrow"><div class="tabs">${TABS.map(([k,l]) => `<button class="tab ${k===key?"on":""}" data-nav="${k}">${l}</button>`).join("")}</div>
       <div class="tright"><label class="rsearch">${IC.srch("#8F8F8F")}<input id="rq" placeholder="Search driver, cab, vendor..." value="${esc(S.q)}" autocomplete="off"></label><div class="fbtn">${IC.filt}</div></div></div>
     <div class="wrap"><div class="card">
       ${toolbar}
-      <div class="thead">${H.map((h,i) => `<div class="c" style="width:${W[i]}px">${i===0 ? cb(allSel, 'data-selall aria-label="Select all visible drivers"') : h}</div>`).join("")}</div>
-      <div class="rows" id="rows">${vis.map(rowHtml).join("")}${vis.length ? "" : '<div class="empty">No drivers match these filters. Reset filters to see the full list.</div>'}</div>
+      <div class="tablex" id="tablex"><div><div class="thead">${H.map((h,i) => `<div class="c" style="width:${W[i]}px">${i===0 ? cb(allSel, 'data-selall aria-label="Select all visible drivers"') : h}</div>`).join("")}</div>
+      <div class="rows" id="rows">${vis.map(rowHtml).join("")}${vis.length ? "" : '<div class="empty">No drivers match these filters. Reset filters to see the full list.</div>'}</div></div></div>
       ${foot}
       ${S.open && vis.some(r => r.name === S.open) ? '<div class="tscrim" data-collapse aria-hidden="true"></div>' : ""}
     </div></div>
@@ -710,15 +730,15 @@ function profHeader(withCoach){
 function profile(){
   const rng = k => `<div class="rng">${["1D","5D","1W","1M","6M","1Y","YTD"].map(r => `<button class="${S.rng[k]===r?"on":""}" data-rng="${k}:${r}">${r}</button>`).join("")}</div>`;
   const radio = (k,l,c) => `<button class="pr ${S.bsel===k?"on":""}" data-bsel="${k}" style="--c:${c}"><i></i>${l}</button>`;
-  return `<div class="app-inner" style="display:flex;width:1680px;height:1183px">${leftMenu("register")}<div class="main">
+  return `<div class="app-inner" style="min-height:1183px">${leftMenu("register")}<div class="main">
     ${topbars("Last 12 weeks")}
     <div class="pc">${profHeader(false)}
       <div class="ptabs"><button class="ptab on">Overview</button><button class="ptab" data-nav="counselling">Councelling logs</button></div>
       <div class="kstrip"><div><span class="kl2">COMPOSITE SAFETY SCORE</span><span class="kv2" style="color:#8a6a00">67 / 100</span></div><div><span class="kl2">TRIPS</span><span class="kv2">1,284</span></div><div><span class="kl2">TRUE DROWSY ACCIDENTS</span><span class="kv2" style="color:#c0264a">1</span></div><div><span class="kl2">FLEET RANK</span><span class="kv2" style="color:#c0264a">412 of 520</span></div></div>
       <div class="pcols"><div class="pleft">
-        <div class="pcard" style="height:332px"><div class="phd"><div><h3>Safety Score Trend</h3><p>Overall score by week, with the events that explain each drop</p></div>${rng("s")}</div>
-          <div style="height:230px">${SST}</div>
-          ${EVENTS.map((e,i) => `<span class="mk" data-ev="${i}" style="left:${24+e[3][0]-12}px;top:${78+e[3][1]-12}px"></span><div class="ppop" id="ev${i}" style="left:${e[4][0]}px;top:${e[4][1]}px"><div class="h"><span class="wk"><span class="bd">${i+1}</span>${e[0]}</span><span class="tg">${e[1]}</span></div><div class="tx">${e[2]}</div></div>`).join("")}
+        <div class="pcard"><div class="phd"><div><h3>Safety Score Trend</h3><p>Overall score by week, with the events that explain each drop</p></div>${rng("s")}</div>
+          <div class="sstw">${SST}
+          ${EVENTS.map((e,i) => `<span class="mk" data-ev="${i}" style="left:calc(${(e[3][0]/8).toFixed(3)}% - 12px);top:calc(${(e[3][1]/2.3).toFixed(3)}% - 12px)"></span><div class="ppop" id="ev${i}" style="left:clamp(0px, calc(${(e[3][0]/8).toFixed(3)}% - 124px), calc(100% - 248px));bottom:calc(${(100-e[3][1]/2.3).toFixed(3)}% + 8px)"><div class="h"><span class="wk"><span class="bd">${i+1}</span>${e[0]}</span><span class="tg">${e[1]}</span></div><div class="tx">${e[2]}</div></div>`).join("")}</div>
         </div>
         <div class="pcard"><div class="phd"><div><h3>Driver Behavioral Trend</h3><p>Rolling weekly incidence across 48,200 operational vehicle kilometers</p></div>${rng("b")}</div>
           <div class="pdiv"></div><div class="pdiv"></div>
@@ -736,7 +756,7 @@ function counselling(){
   const W = [130,240,190,150,130,472];
   const q = (S.clq || "").toLowerCase();
   const rows = LOG.filter(r => !q || [r[1],r[3],r[5]].some(x => x.toLowerCase().includes(q)));
-  return `<div class="app-inner" style="display:flex;width:1680px;height:1084px">${leftMenu("register")}<div class="main">
+  return `<div class="app-inner" style="min-height:1084px">${leftMenu("register")}<div class="main">
     ${topbars("Last 12 weeks")}
     <div class="pc cl">${profHeader(true)}
       <div class="ptabs"><button class="ptab" data-nav="profile">Overview</button><button class="ptab on">Councelling logs</button></div>
@@ -753,7 +773,7 @@ function counselling(){
 function overlays(){
   let h = "";
   if (S.pop) { const f = FILTERS[S.pop]; const cur = S.filters[S.pop] || "All";
-    h += `<div class="ovl show" data-close-pop><div class="pop" style="left:${f.pos[0]}px;top:${f.pos[1]}px" role="menu">
+    h += `<div class="ovl show" data-close-pop><div class="pop" style="left:${S.popPos[0]}px;top:${S.popPos[1]}px" role="menu">
       <h4>${f.title}</h4><div class="cur">${cur}</div>
       <button class="opt ${cur==="All"?"on":""}" data-opt="">All</button>
       ${f.opts.map(o => `<button class="opt ${cur===o?"on":""}" data-opt="${o}">${o}</button>`).join("")}
@@ -761,7 +781,7 @@ function overlays(){
   if (S.modal) {
     const A = [["appreciate","Send appreciation","Note from manager"],["watch","Put under watch","Monitor closely"],["warn","Issue warning","Formal notice"],["suspend","Suspend","Stop assigning trips"]];
     const en = allowed(); const daysOn = S.act === "warn" || S.act === "suspend";
-    h += `<div class="ovl show"><div class="dim" data-close-modal></div><div class="dlg" role="dialog" aria-modal="true" aria-labelledby="dt">
+    h += `<div class="ovl mod show"><div class="dim" data-close-modal></div><div class="dlg" role="dialog" aria-modal="true" aria-labelledby="dt">
       <div class="dh"><div><h2 id="dt">Take action</h2><p>Choose the action, how long it applies and add a comment.</p></div><button class="xb" data-close-modal aria-label="Close">${IC.x}</button></div>
       <div class="grp"><div class="lab">ACTION</div><div class="acts">${A.map(([k,t,s]) => `<button class="act ${en.includes(k)?"":"dis"} ${S.act===k?"on":""}" data-act="${k}" ${en.includes(k)?"":'aria-disabled="true"'}><span class="rd"></span><span><b>${t}</b><small>${s}</small></span></button>`).join("")}</div></div>
       <div class="grp ${daysOn?"":"off"}" ${daysOn?"":'aria-disabled="true"'}><div class="lab">NUMBER OF DAYS</div><div class="days"><div class="step"><button data-step="-1" aria-label="Fewer days">−</button><div class="v">${S.days}</div><button data-step="1" aria-label="More days">+</button></div><span class="dl">days</span>
@@ -788,7 +808,7 @@ function render(){
 function go(route){ S.open = null; S.sel.clear(); S.saved = false; S.pop = null; rowsScroll = 0; if (location.hash.slice(1) !== route) location.hash = route; else { S.route = route; render(); } }
 const routeOf = h => (h === "overview" || h === "profile" || h === "counselling" || SCREENS[h]) ? h : "overview";
 window.addEventListener("hashchange", () => { const h = location.hash.slice(1); S.route = routeOf(h); if (SCREENS[S.route]) S.lastReg = S.route; S.sel.clear(); S.saved = false; S.pop = null; S.modal = false; rowsScroll = 0; render(); });
-function fit(){ const s = Math.min(1, window.innerWidth / 1680); app.style.zoom = s; }
+function fit(){ const s = Math.min(1, window.innerWidth / 1200); app.style.zoom = s; }
 window.addEventListener("resize", fit);
 
 app.addEventListener("click", e => {
@@ -810,7 +830,7 @@ app.addEventListener("click", e => {
   if (d.reset !== undefined) { S.filters = {}; S.q = ""; render(); return; }
   if (d.flagnav !== undefined) { [...S.sel].forEach(n => setFlag(n, true)); go("flagged"); return; }
   if (d.take !== undefined) { S.modal = true; S.act = S.route === "high-performing" ? "appreciate" : "watch"; S.days = 14; S.commentEdited = false; S.comment = "Review the selected drivers after 14 days."; render(); return; }
-  if (d.filter) { S.pop = S.pop === d.filter ? null : d.filter; render(); return; }
+  if (d.filter) { const z = parseFloat(app.style.zoom) || 1, ar = app.getBoundingClientRect(), rc = t.getBoundingClientRect(); S.popPos = [Math.max(12, Math.min((rc.left - ar.left) / z - 12, app.offsetWidth - 262)), (rc.bottom - ar.top) / z + 10]; S.pop = S.pop === d.filter ? null : d.filter; render(); return; }
   if (d.opt !== undefined) { e.stopPropagation(); if (d.opt) S.filters[S.pop] = d.opt; else delete S.filters[S.pop]; S.pop = null; render(); return; }
   if (d.optReset !== undefined) { e.stopPropagation(); S.filters = {}; S.pop = null; render(); return; }
   if (d.closePop !== undefined && e.target === t) { S.pop = null; render(); return; }
