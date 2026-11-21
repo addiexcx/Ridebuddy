@@ -475,7 +475,7 @@ const FILTERS = {
 };
 
 /* ---------- State ---------- */
-const S = { profile:null, lastReg:"all", bsel:"all", rng:{s:"6M", b:"6M"}, clq:"", open:null, route:"overview", sel:new Set(), filters:{}, q:"", saved:false, pop:null, modal:false, act:"watch", days:14, comment:"Review the selected drivers after 14 days.", commentEdited:false };
+const S = { profile:null, lastReg:"all", bsel:"all", rng:{s:"6M", b:"6M"}, clq:"", open:null, route:"overview", sel:new Set(), filters:{}, q:"", saved:false, pop:null, modal:false, act:"watch", days:7, comment:"Review the selected drivers after 7 days.", commentEdited:false };
 const flags = {}; // name -> bool, shared across screens
 const flagOrder = []; // drivers flagged in this session that are not in the original flagged list, newest first
 const FLAG_NAMES = new Set(FLAG.map(r => r[0]));
@@ -788,7 +788,7 @@ function overlays(){
       <div class="dh"><div><h2 id="dt">Take action</h2><p>Choose the action, how long it applies and add a comment.</p></div><button class="xb" data-close-modal aria-label="Close">${IC.x}</button></div>
       <div class="grp"><div class="lab">ACTION</div><div class="acts">${A.map(([k,t,s]) => `<button class="act ${en.includes(k)?"":"dis"} ${S.act===k?"on":""}" data-act="${k}" ${en.includes(k)?"":'aria-disabled="true"'}><span class="rd"></span><span><b>${t}</b><small>${s}</small></span></button>`).join("")}</div></div>
       <div class="grp ${daysOn?"":"off"}" ${daysOn?"":'aria-disabled="true"'}><div class="lab">NUMBER OF DAYS</div><div class="days"><div class="step"><button data-step="-1" aria-label="Fewer days">−</button><div class="v">${S.days}</div><button data-step="1" aria-label="More days">+</button></div><span class="dl">days</span>
-        <div class="pres">${[7,14,30,60,90].map(n => `<button class="pre ${S.days===n?"on":""}" data-days="${n}">${n} d</button>`).join("")}</div></div></div>
+        <div class="pres">${[1,3,5,7].map(n => `<button class="pre ${S.days===n?"on":""}" data-days="${n}">${n} d</button>`).join("")}</div></div></div>
       <div class="grp"><label class="lab" for="cm">COMMENT</label><textarea id="cm">${esc(S.comment)}</textarea></div>
       <div class="df"><button class="b2" style="opacity:0;pointer-events:none" tabindex="-1" aria-hidden="true">Cancel</button><div style="display:flex;gap:10px"><button class="b2 k" style="background:#000;border-color:#000;height:36px" data-save>${IC.dlw}Download PDF and Save</button></div></div>
     </div></div>`;
@@ -832,7 +832,7 @@ app.addEventListener("click", e => {
   if (d.clear !== undefined) { S.sel.clear(); S.saved = false; render(); return; }
   if (d.reset !== undefined) { S.filters = {}; S.q = ""; render(); return; }
   if (d.flagnav !== undefined) { [...S.sel].forEach(n => setFlag(n, true)); go("flagged"); return; }
-  if (d.take !== undefined) { S.modal = true; S.act = S.route === "high-performing" ? "appreciate" : "watch"; S.days = 14; S.commentEdited = false; S.comment = "Review the selected drivers after 14 days."; render(); return; }
+  if (d.take !== undefined) { S.modal = true; S.act = S.route === "high-performing" ? "appreciate" : "watch"; S.days = 7; S.commentEdited = false; S.comment = "Review the selected drivers after 7 days."; render(); return; }
   if (d.filter) { const z = parseFloat(app.style.zoom) || 1, ar = app.getBoundingClientRect(), rc = t.getBoundingClientRect(); S.popPos = [Math.max(12, Math.min((rc.left - ar.left) / z - 12, app.offsetWidth - 262)), (rc.bottom - ar.top) / z + 10]; S.pop = S.pop === d.filter ? null : d.filter; render(); return; }
   if (d.opt !== undefined) { e.stopPropagation(); if (d.opt) S.filters[S.pop] = d.opt; else delete S.filters[S.pop]; S.pop = null; render(); return; }
   if (d.optReset !== undefined) { e.stopPropagation(); S.filters = {}; S.pop = null; render(); return; }
