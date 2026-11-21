@@ -116,7 +116,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .pg.dots{border-color:transparent}
 .rowsl{font-size:12px;color:var(--g5e);margin-right:4px}
 .pgw{width:auto;padding:0 10px}
-.csr{justify-content:flex-end;gap:6px}
+.csr{justify-content:flex-start;gap:6px}
 .csr .a{font-size:12px;color:var(--ink)}
 .csr .b{font-size:10px;color:var(--g5e)}
 .bottom{height:24px}
@@ -584,7 +584,7 @@ function register(key){
       `<span class="n125">${r.trips}</span>`,
       `<span class="sc" style="color:${scoreCol(r.shift,"#e8456b")}">${r.shift}</span>`,
       `<span class="sc" style="color:${scoreCol(r.safety,"#c0264a")}">${r.safety}</span>`,
-      trigHtml(r.pills), sevHtml(r.sev), `<span class="a">${r.cs}</span><span class="b">${r.last}</span>`
+      trigHtml(r.pills), sevHtml(r.sev), `<span class="a">${r.cs}</span>`
     ] : [
       cb(on, `data-sel="${esc(r.name)}" aria-label="Select ${esc(r.name)}"`),
       `<span class="sno">${r.sno}</span>`,
