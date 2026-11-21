@@ -248,7 +248,7 @@ textarea{width:664px;height:87px;background:#fff;border:1px solid var(--line2);b
 /* Scrim (table only) + focus outline, as in the trigger charts screen */
 .card{position:relative}
 .tscrim{position:absolute;inset:0;border-radius:12px;background:rgba(10,13,15,.55);z-index:2;cursor:default}
-.xr{position:relative;z-index:3}
+.xr{position:sticky;left:0;z-index:3;box-sizing:border-box;width:var(--tw,100%);max-width:var(--tw,100%);overflow:hidden}
 .xr{box-shadow:0 12px 40px rgba(0,0,0,.35)}
 
 /* Driver profile (Overview V2) + Counselling log */
@@ -804,6 +804,7 @@ function render(){
   const cq = document.getElementById("clq"); if (cq) cq.oninput = e => { S.clq = e.target.value; const pos = e.target.selectionStart; render(); const n = document.getElementById("clq"); n.focus(); n.setSelectionRange(pos,pos); };
   document.querySelectorAll(".mk").forEach(m => { const pop = document.getElementById("ev" + m.dataset.ev); m.onmouseenter = () => pop.classList.add("show"); m.onmouseleave = () => pop.classList.remove("show"); });
   const r2 = document.getElementById("rows"); if (r2) r2.scrollTop = rowsScroll;
+  sizeXr();
   const xr = document.querySelector(".xr"); if (xr && S.justOpened) { S.justOpened = false; xr.scrollIntoView({block:"nearest"}); }
   const q = document.getElementById("rq");
   if (q) q.oninput = e => { S.q = e.target.value; const pos = e.target.selectionStart; render(); const n = document.getElementById("rq"); n.focus(); n.setSelectionRange(pos,pos); };
@@ -811,7 +812,8 @@ function render(){
 function go(route){ S.open = null; S.sel.clear(); S.saved = false; S.pop = null; rowsScroll = 0; if (location.hash.slice(1) !== route) location.hash = route; else { S.route = route; render(); } }
 const routeOf = h => (h === "overview" || h === "profile" || h === "counselling" || SCREENS[h]) ? h : "overview";
 window.addEventListener("hashchange", () => { const h = location.hash.slice(1); S.route = routeOf(h); if (SCREENS[S.route]) S.lastReg = S.route; S.sel.clear(); S.saved = false; S.pop = null; S.modal = false; rowsScroll = 0; render(); });
-function fit(){ const s = Math.min(1, window.innerWidth / 1200); app.style.zoom = s; }
+function sizeXr(){ const t = document.getElementById("tablex"), x = document.querySelector(".xr"); if (t && x) x.style.setProperty("--tw", t.clientWidth + "px"); }
+function fit(){ const s = Math.min(1, window.innerWidth / 1200); app.style.zoom = s; sizeXr(); }
 window.addEventListener("resize", fit);
 
 app.addEventListener("click", e => {
