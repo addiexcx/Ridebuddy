@@ -568,7 +568,7 @@ function register(key){
       ...FLAG.map(r => ({name:r[0], id:r[1], model:r[2], plate:r[3], trips:r[4], shift:r[5], safety:r[6], pills:r[7], sev:r[8], cs:r[9], last:r[10], flag:1}))].filter(r => isFlag(r.name, 1))
     : sc.rows.map(r => ({sno:r[0], name:r[1], id:r[2], model:r[3], plate:r[4], trip:r[5], trips:r[6], shift:r[7], safety:r[8], pills:r[9], sev:r[10], cs:r[11], flag:r[12]}));
   const vis = rows.filter(matches);
-  const W = sc.flagged ? [26,200,205,90,95,122,203,109,145] : [26,40,200,205,100,90,86,122,203,109,145];
+  const W = sc.flagged ? [26,200,165,90,95,122,203,109,145] : [26,40,200,165,100,90,86,122,203,109,145];
   const flagX = sc.flagged ? 216 : 256;
   const allSel = vis.length && vis.every(r => S.sel.has(r.name));
   const hdr = (label, k) => k ? `<button data-filter="${k}" class="${S.filters[k]?"act":""}">${label}</button>` : label;
