@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RideBuddy Driver Register</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Figma Flow 3 (6th Version) rebuilt 1:1 at the design's 1680px frame size; the frame scales down to fit narrower windows. */
+:root{
+  --ink:#0f0f0f; --black:#000000; --g5e:#5e5e5e; --g8a:#8a8a8a; --g8f:#8f8f8f; --line:#ececec; --line2:#e0e0e0;
+  --navy:#034373; --navy-bg:#f5fbff; --red:#df0021; --blue:#076bb6; --sky:#97b9df; --tile:#f2f1f1;
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif; color-scheme:light;
+  fit();
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:#fff;font-family:var(--font);color:var(--ink);-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:left}
+:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.stage{padding:0;display:flex;justify-content:center}
+.app{position:relative;width:1680px;display:flex;background:#fff;overflow:hidden;flex:none}
+/* Left menu */
+.left{width:240px;flex:none;display:flex;flex-direction:column;gap:4px;padding:16px;border-right:1px solid var(--line);background:#fff}
+.brand{display:flex;align-items:center;gap:10px;padding:4px;height:40px}
+.brand .logo{width:32px;height:32px;border-radius:9px;background:var(--ink);display:grid;place-items:center}
+.brand b{font-size:15px;font-weight:600;width:135px}
+.left .sp12{height:12px;flex:none}
+.sec{padding:8px;font-size:10px;font-weight:500;color:var(--g8a);letter-spacing:.08em;text-transform:uppercase;height:28px;line-height:12px}
+.mi{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;height:36px;font-size:13px;font-weight:500;color:var(--g5e);width:207px}
+.mi svg{flex:none}
+.mi.sub{padding:7px 10px 7px 40px;height:30px}
+.mi.on{background:#f2f2f2;color:var(--ink);font-weight:600}
+.mi .grow{flex:1}
+.badge{background:#e8456b;color:#fff;border-radius:999px;padding:1px 6px;font-size:10px;font-weight:600;line-height:13px}
+.left .spacer{flex:1}
+.left .rule{height:1px;background:var(--line);flex:none}
+/* Main */
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.top{height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:#fff}
+.search{display:flex;align-items:center;gap:8px;border:1px solid var(--line2);border-radius:8px;padding:7px 12px;width:300px;height:32px}
+.search span{font-size:13px;color:var(--g8a);flex:1}
+.search kbd{font:11px var(--font);color:var(--g8a)}
+.av{width:32px;height:32px;border-radius:999px;background:#d9d9d9;display:grid;place-items:center;font-size:11px;font-weight:600;color:var(--g5e)}
+.subbar{height:32px;background:#f5f5f5;display:flex;align-items:center;gap:24px;padding:8px 12px;font-size:11px;color:var(--g5e)}
+.subbar .chg{display:flex;align-items:center;gap:6px;white-space:pre}
+/* Register page */
+.ph{padding:24px 40px 20px;display:flex;flex-direction:column;gap:16px}
+.ph h1{margin:0;font-size:28px;font-weight:600;letter-spacing:-.005em;line-height:34px}
+.ph p{margin:0;font-size:13px;color:var(--g5e);line-height:16px}
+.tabsrow{display:flex;align-items:center;justify-content:space-between;padding:0 41px;height:34px}
+.tabs{display:flex;gap:8px}
+.tab{padding:8px 14px;border-radius:999px;background:var(--navy-bg);color:var(--navy);font-size:13px;font-weight:600;line-height:16px}
+.tab.on{background:var(--navy);color:#fff}
+.tright{display:flex;gap:10px;align-items:center}
+.rsearch{display:flex;align-items:center;gap:8px;border:1px solid var(--line2);border-radius:8px;padding:7px 12px;width:300px;height:34px}
+.rsearch input{border:0;outline:0;font:13px var(--font);color:var(--ink);flex:1;min-width:0;padding:0;background:transparent}
+.rsearch input::placeholder{color:var(--g8f)}
+.fbtn{width:34px;height:34px;border:1px solid var(--line2);border-radius:8px;display:grid;place-items:center}
+.wrap{padding:0 40px}
+.card{background:#fff;border-radius:12px;padding:4px 10px;display:flex;flex-direction:column}
+.tb{height:48px;padding:10px;display:flex;justify-content:space-between;align-items:center}
+.tb .l{display:flex;align-items:center;gap:14px}
+.tb .cnt{font-size:13px;font-weight:600}
+.tb .hint{font-size:12px;color:var(--g8a)}
+.tb .hint button{color:var(--g8a)}
+.tb .hint button:hover{color:var(--ink);text-decoration:underline}
+.tb .clr{font-size:12px;font-weight:500;color:#0e7a33}
+.tb .saved{font-size:12px;font-weight:600;color:#0e6b33}
+.tb .r{display:flex;gap:8px;align-items:center}
+.ta-wrap{background:var(--ink);border-radius:8px;padding:3px;display:flex}
+.ta-wrap button{padding:4px 10px;border-radius:6px;color:#fff;font-size:11.5px;font-weight:600;line-height:14px}
+.flagbtn{background:#fff;border:1px solid var(--line2);border-radius:8px;padding:6px 10px;font-size:11.5px;font-weight:500;line-height:14px}
+.thead,.row{display:flex;align-items:center;padding:0 10px}
+.thead{height:30px;border-bottom:1px solid var(--line2)}
+.thead .c{font-size:10px;font-weight:500;color:var(--g8a);letter-spacing:.08em;text-transform:uppercase;line-height:12px}
+.thead .c button{letter-spacing:inherit;text-transform:inherit;color:inherit;font-size:inherit;font-weight:inherit}
+.thead .c button:hover,.thead .c button.act{color:var(--ink)}
+.c{flex:none;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.rows{height:660px;overflow-y:auto}
+.row{height:36px;border-bottom:1px solid var(--line);position:relative}
+.row:hover{background:#fafafa}
+.cb{width:16px;height:16px;border-radius:4px;border:1.5px solid #bdbdbd;background:#fff;display:grid;place-items:center}
+.cb.on{background:var(--ink);border-color:var(--ink)}
+.sno{font-size:12px;color:var(--g8a)}
+.nm{font-size:12.5px;font-weight:600}
+.idtag{background:#f2f2f2;color:var(--g5e);border-radius:5px;padding:2px 7px;font-size:10.5px;font-weight:500;line-height:13px}
+.veh{font-size:12.5px;font-weight:500}
+.plate{font-size:11.5px;color:var(--g5e)}
+.trip{font-size:12px}
+.n125{font-size:12.5px;font-weight:500}
+.sc{font-size:12.5px;font-weight:600}
+.pill{border-radius:10px;padding:3px 8px;font-size:11px;font-weight:600;line-height:13px}
+.sev{border-radius:6px;padding:3px 8px;font-size:11.5px;font-weight:500;line-height:14px}
+.none{font-size:12px;color:var(--g8a)}
+.st{display:flex;align-items:center;gap:6px;padding:3px 9px;font-size:11px;font-weight:600;color:#000;line-height:13px}
+.st i{width:6px;height:6px;border-radius:50%}
+.noact{font-size:12px;color:#000}
+.flag{position:absolute;top:8px;width:20px;height:20px;display:none}
+.flag.on,.row:hover .flag{display:block}
+.flag svg{display:block}
+.flag .red{display:none}
+.flag.on .red,.flag:hover .red{display:block}
+.flag.on .blk,.flag:hover .blk{display:none}
+.empty{padding:10px;font-size:13px;color:var(--g5e);line-height:17px}
+.foot{height:58px;padding:14px 10px;display:flex;justify-content:space-between;align-items:center}
+.foot .t{font-size:12.5px;color:var(--g5e)}
+.pager{display:flex;gap:6px;align-items:center}
+.pg{width:30px;height:30px;border:1px solid var(--line2);border-radius:8px;background:#fff;display:grid;place-items:center;font-size:12.5px;font-weight:600}
+.pg.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pg.dots{border-color:transparent}
+.rowsl{font-size:12px;color:var(--g5e);margin-right:4px}
+.pgw{width:auto;padding:0 10px}
+.csr{justify-content:flex-end;gap:6px}
+.csr .a{font-size:12px;color:var(--ink)}
+.csr .b{font-size:10px;color:var(--g5e)}
+.bottom{height:24px}
+/* Overview */
+.oh{padding:32px 40px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.oh h1{margin:0;font-size:28px;font-weight:600;letter-spacing:-.005em;line-height:34px;color:#000}
+.oh p{margin:4px 0 0;font-size:13px;color:var(--g5e);line-height:16px}
+.btn{border:1px solid var(--line2);background:#fff;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:500;color:#000;line-height:16px;height:34px}
+.btn.pri{background:var(--navy);border-color:var(--navy);color:#fff;height:32px}
+.osec{padding:32px 40px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:28px}
+.shd{display:flex;justify-content:space-between;align-items:center}
+.shd h2{margin:0;font-size:22px;font-weight:600;letter-spacing:-.003em;line-height:27px;color:#000}
+.shd p{margin:4px 0 0;font-size:12px;color:var(--g5e);line-height:15px}
+.kpis{display:flex}
+.kpi{display:flex;flex-direction:column;gap:10px;padding-left:24px;border-left:1px solid var(--line);width:346.33px}
+.kpi:first-child{padding-left:0;border-left:0;width:321px}
+.kpi .in{display:flex;flex-direction:column;gap:6px}
+.kl{font-size:10px;font-weight:500;color:var(--g5e);letter-spacing:.08em;text-transform:uppercase;line-height:12px}
+.kv{font-size:28px;font-weight:600;letter-spacing:-.005em;line-height:34px;color:#000}
+.ks{font-size:12px;color:var(--g5e);line-height:15px}
+.bar{width:80px;height:4px;border-radius:2px}
+.tiles{display:flex;gap:12px;padding-top:4px}
+.tile{width:331px;background:var(--tile);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.tile .v{font-size:22px;font-weight:600;line-height:27px;color:#000}
+.two{display:flex;border-bottom:1px solid var(--line)}
+.col{width:719.5px;padding:32px 40px;display:flex;flex-direction:column;gap:18px}
+.col + .col{width:720.5px;border-left:1px solid var(--line)}
+.legend{display:flex;gap:16px;align-items:center}
+.lg{display:flex;align-items:center;gap:6px;font-size:12px;color:#000}
+.lg i{width:16px;height:16px;border-radius:4px;display:grid;place-items:center}
+.ins{background:var(--tile);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--g5e);line-height:15px}
+.tcol{gap:12px;border-bottom:0}
+.trh{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.trh div{font-size:10px;font-weight:500;color:var(--g5e);letter-spacing:.08em;text-transform:uppercase;line-height:13px}
+.tr{display:flex;gap:12px;padding:12px 0;align-items:center;border-bottom:1px solid var(--line);height:56px}
+.w374{width:373.5px}.w50{width:50px;text-align:right}.w60{width:60px;text-align:right}.w120{width:120px}
+.tr b{display:block;font-size:13px;font-weight:600;color:#000;line-height:16px}
+.tr small{display:block;font-size:11px;color:var(--g5e);line-height:13px;margin-top:2px}
+.tr .s{font-size:14px;font-weight:600}
+.tr .d{font-size:13px;font-weight:500}
+.op{display:inline-block;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:500;line-height:15px;white-space:nowrap}
+/* Overlays */
+.ovl{position:absolute;inset:0;z-index:10;display:none}
+.ovl.show{display:block}
+.dim{position:absolute;inset:0;background:rgba(0,0,0,.4)}
+.dlg{position:absolute;left:480px;top:319px;width:720px;background:#fff;border-radius:16px;box-shadow:0 16px 48px rgba(0,0,0,.3);padding:24px 28px;display:flex;flex-direction:column;gap:18px}
+.dh{display:flex;justify-content:space-between;align-items:center}
+.dh h2{margin:0;font-size:19px;font-weight:600;line-height:23px}
+.dh p{margin:4px 0 0;font-size:12.5px;color:var(--g5e);line-height:15px}
+.xb{width:30px;height:30px;border:1px solid var(--line2);border-radius:8px;display:grid;place-items:center}
+.lab{font-size:10px;font-weight:500;color:var(--g8a);letter-spacing:.08em;line-height:12px}
+.grp{display:flex;flex-direction:column;gap:10px}
+.acts{display:flex;gap:10px}
+.act{width:158.3px;display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:10px;background:#fff;box-shadow:inset 0 0 0 .5px rgba(224,224,224,.9)}
+.act .rd{width:16px;height:16px;border-radius:8px;border:1.5px solid #bdbdbd;display:grid;place-items:center;flex:none}
+.act.on .rd{border-color:var(--ink)}
+.act.on .rd::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--ink)}
+.act b{display:block;font-size:13px;font-weight:600;line-height:16px;white-space:nowrap}
+.act small{display:block;font-size:11.5px;color:var(--g8a);line-height:14px;margin-top:2px;white-space:nowrap}
+.act.dis{opacity:.4;cursor:default;pointer-events:none}
+.days{display:flex;align-items:center;gap:12px}
+.step{display:flex;align-items:center;border:1px solid var(--line2);border-radius:8px;height:38px;width:134px;overflow:hidden}
+.step button{width:34px;height:36px;display:grid;place-items:center;font-size:16px;font-weight:500}
+.step .v{width:64px;height:36px;display:grid;place-items:center;font-size:14px;font-weight:600;border-left:1px solid var(--line2);border-right:1px solid var(--line2);background:#fff}
+.dl{font-size:13px;color:var(--g5e)}
+.pres{display:flex;gap:8px}
+.pre{border:1px solid #d0d0d0;border-radius:14px;padding:6px 12px;font-size:12.5px;font-weight:500;line-height:15px;background:#fff}
+.pre.on{border-color:var(--ink);font-weight:600}
+.grp.off{opacity:.4;pointer-events:none}
+textarea{width:664px;height:87px;background:#fff;border:1px solid var(--line2);border-radius:8px;padding:10px 12px;font:13px/16px var(--font);color:var(--ink);resize:none;outline:0}
+.df{display:flex;justify-content:space-between;align-items:center}
+.b2{display:flex;align-items:center;gap:8px;justify-content:center;border:1px solid var(--line2);background:#fff;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;line-height:16px;height:36px}
+.b2.k{background:var(--ink);border-color:var(--ink);color:#fff;height:34px}
+.pop{position:absolute;width:250px;background:#fff;border-radius:8px;box-shadow:inset 0 0 0 .5px rgba(224,224,224,.9);padding:14px 12px 12px;display:flex;flex-direction:column;gap:6px}
+.pop h4{margin:0;font-size:14px;font-weight:500;color:#1f1f1f;line-height:17px}
+.pop .cur{font-size:12px;color:#1f1f1f;line-height:15px}
+.opt{height:32px;border-radius:8px;padding:6px 10px;display:flex;align-items:center;font-size:11.5px;font-weight:500;line-height:14px;background:#fff;box-shadow:inset 0 0 0 .5px rgba(224,224,224,.9);width:226px}
+.opt:hover{background:#f7f7f7}
+.opt.on{background:#f2f2f2}
+.opt.reset{height:26.4px}
+
+/* Expanded row (Driver Register - row expanded - short, trigger charts) */
+.row{cursor:pointer}
+.row.open{background:#fafafa}
+.xr{background:#fafafb;border-bottom:1px solid #e6e6e6;border-radius:21px;padding:16px 24px;display:flex;flex-direction:column;gap:14px;cursor:default}
+.xh{display:flex;align-items:center;gap:14px;height:48px}
+.xav{width:48px;height:48px;border-radius:24px;background:#e8e4f8;color:#4a3a9a;display:grid;place-items:center;font-size:15px;font-weight:600;flex:none}
+.xt{display:flex;flex-direction:column;gap:3px}
+.xt .l1{display:flex;align-items:center;gap:8px}
+.xt .l1 b{font-size:17px;font-weight:600;line-height:21px}
+.xtag{border-radius:6px;padding:3px 8px;font-size:11.5px;font-weight:500;line-height:14px;white-space:nowrap}
+.xt .l2{font-size:12.5px;color:#5e5e5e;line-height:15px}
+.xh .spc{flex:1}
+.xacts{display:flex;gap:8px;align-items:center}
+.xb1{background:#0f0f0f;color:#fff;border-radius:8px;padding:8px 14px;font-size:12.5px;font-weight:600;line-height:15px;height:32px}
+.xb2{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:8px 14px;font-size:12.5px;font-weight:600;line-height:15px;height:32px}
+.xcol{width:32px;height:32px;border:1px solid #e0e0e0;border-radius:8px;display:grid;place-items:center}
+.xcols{display:flex;gap:12px;background:#fff}
+.xp{flex:1 1 0;min-width:0;background:#fff;border:1px solid #e6e6e6;border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:12px}
+.xcap{font-size:10px;font-weight:500;color:#8a8a8a;letter-spacing:.08em;line-height:12px;text-transform:uppercase}
+.xbody{display:flex;flex-direction:column;gap:12px}
+.xkv{display:flex;gap:8px;font-size:12px;line-height:15px}
+.xkv span:first-child{width:96px;flex:none;color:#8a8a8a}
+.xkv span:last-child{font-size:12.5px;font-weight:500;color:#0f0f0f}
+.xhd{display:flex;justify-content:space-between;align-items:center;height:20px}
+.xhd .ti{display:flex;gap:8px;align-items:center}
+.xhd .ti b{font-size:11.5px;font-weight:500;line-height:14px}
+.xtags{display:flex;gap:8px}
+.xbars{display:flex;flex-direction:column;gap:8px}
+.xbar{display:flex;align-items:center;gap:10px;height:15px}
+.xbar .nm2{width:84px;flex:none;font-size:12px;color:#8a8a8a}
+.xbar .tr2{flex:1;height:8px;border-radius:4px;background:#f0f0f0;overflow:hidden}
+.xbar .tr2 i{display:block;height:8px;border-radius:4px}
+.xbar .ct{width:12px;flex:none;font-size:12px;font-weight:600}
+.xtl{display:flex;flex-direction:column;gap:4px;padding-top:4px}
+.xax{display:flex;justify-content:space-between;font-size:10px;color:#8a8a8a;line-height:12px}
+.xax .m{color:#c0264a;font-weight:500}
+.xmet{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.xmet .tx{display:flex;flex-direction:column;gap:2px}
+.xmet .tx span{font-size:12px;color:#8a8a8a;line-height:15px}
+.xmet .tx b{font-size:12.5px;font-weight:500;line-height:15px}
+.xcn{background:#fff;border:1px solid #e6e6e6;border-radius:12px;padding:11px 16px;display:flex;gap:16px;align-items:center}
+.xcn b{font-size:12.5px;font-weight:500;white-space:nowrap}
+.xcn .sm{flex:1;min-width:0;font-size:12.5px;color:#8a8a8a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Scrim (table only) + focus outline, as in the trigger charts screen */
+.card{position:relative}
+.tscrim{position:absolute;inset:0;border-radius:12px;background:rgba(10,13,15,.55);z-index:2;cursor:default}
+.xr{position:relative;z-index:3}
+.xr{box-shadow:0 12px 40px rgba(0,0,0,.35)}
+
+/* Driver profile (Overview V2) + Counselling log */
+.pc{padding:24px 40px;display:flex;flex-direction:column;gap:20px}
+.pc.cl{gap:14px}
+.crumb{display:flex;gap:8px;font-size:12px;color:#8a8a8a;line-height:15px}
+.crumb button{color:#8a8a8a;font-size:12px}
+.crumb button:hover{color:#0f0f0f;text-decoration:underline}
+.crumb b{color:#0f0f0f;font-weight:500}
+.hcard{background:#fff;border-radius:16px;padding:20px;display:flex;align-items:center;gap:18px}
+.hav{width:72px;height:72px;border-radius:36px;background:#f2f2f2;display:grid;place-items:center;font-size:22px;font-weight:600;flex:none}
+.hinfo{flex:1;display:flex;flex-direction:column;gap:6px;min-width:0}
+.hinfo .l1{display:flex;align-items:center;gap:10px}
+.hinfo .l1 b{font-size:22px;font-weight:600;line-height:27px}
+.hinfo .l2{font-size:13px;color:#5e5e5e;line-height:16px}
+.hinfo .l3{font-size:12.5px;color:#8a8a8a;line-height:15px;white-space:pre}
+.htag{border-radius:6px;padding:3px 8px;font-size:11.5px;font-weight:500;line-height:14px}
+.hbtns{display:flex;gap:8px;align-items:center}
+.hb{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:9px 14px;font-size:12.5px;font-weight:600;line-height:15px;height:35px}
+.hb.k{background:#0f0f0f;border-color:#0f0f0f;color:#fff;height:33px}
+.ptabs{display:flex;gap:24px;border-bottom:1px solid #e0e0e0;height:28px}
+.ptab{display:flex;flex-direction:column;gap:9px;font-size:13px;font-weight:500;color:#5e5e5e;line-height:16px}
+.ptab::after{content:"";height:2px;display:block}
+.ptab.on{color:#0f0f0f;font-weight:600}
+.ptab.on::after{background:#0f0f0f}
+.ptab.pdim{opacity:.5;cursor:default}
+.kstrip{background:#fff;border-radius:16px;padding:18px;display:flex}
+.kstrip > div{flex:1;padding:0 18px;display:flex;flex-direction:column;gap:4px}
+.kstrip > div + div{border-left:1px solid #ececec}
+.kstrip .kl2{font-size:10px;font-weight:500;color:#8a8a8a;letter-spacing:.08em;line-height:12px}
+.kstrip .kv2{font-size:20px;font-weight:600;line-height:24px}
+.pcols{display:flex;gap:16px;align-items:flex-start}
+.pleft{width:914px;display:flex;flex-direction:column;gap:16px}
+.pcard{background:#fff;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:16px;position:relative}
+.phd{display:flex;justify-content:space-between;align-items:center;height:38px}
+.phd h3{margin:0;font-size:16px;font-weight:600;line-height:19px}
+.phd p{margin:4px 0 0;font-size:12.5px;color:#8a8a8a;line-height:15px}
+.rng{background:#f2f2f2;border-radius:10px;padding:3px;display:flex;gap:21px;align-items:center;height:36px}
+.rng button{padding:4px 10px;border-radius:8px;font-size:12px;font-weight:500;color:#5e5e5e;line-height:15px}
+.rng button.on{background:#0f0f0f;color:#fff;font-weight:600}
+.pdiv{height:1px;background:#ebebeb}
+.plg{display:flex;justify-content:space-between;align-items:center;height:16px}
+.prg{display:flex;gap:20px;align-items:center}
+.pr{display:flex;align-items:center;gap:8px;font-size:12.5px;color:#404040;line-height:15px}
+.pr i{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--c);background:#fff;display:grid;place-items:center}
+.pr.on{color:#0f0f0f;font-weight:500}
+.pr.on i::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--c)}
+.pref{display:flex;align-items:center;gap:8px;font-size:12.5px;color:#404040}
+.mk{position:absolute;width:24px;height:24px;border-radius:50%;cursor:pointer}
+.ppop{position:absolute;width:248px;background:#fff;border:1px solid #e6e6e6;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.12);padding:12px;display:none;flex-direction:column;gap:6px;z-index:2;pointer-events:none}
+.ppop.show{display:flex}
+.ppop .h{display:flex;justify-content:space-between;align-items:center}
+.ppop .wk{display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:500;color:#8a8a8a}
+.ppop .bd{width:18px;height:18px;border-radius:9px;background:#0f0f0f;color:#fff;font-size:10px;font-weight:600;display:grid;place-items:center}
+.ppop .tg{background:#fce8ee;color:#c0264a;border-radius:6px;padding:2px 7px;font-size:11.5px;font-weight:500;line-height:14px}
+.ppop .tx{font-size:12.5px;font-weight:500;line-height:1.4}
+.prail{width:430px;display:flex;flex-direction:column;gap:12px}
+.pcat{background:#fff;border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.pcat .t{font-size:14px;font-weight:600;line-height:17px}
+.pcat .sv{display:flex;justify-content:space-between;align-items:flex-start;height:40px}
+.pcat .sv .n{display:flex;align-items:baseline;gap:8px}
+.pcat .sv .n b{font-size:26px;font-weight:600;line-height:31px}
+.pcat .sv .n span{font-size:12px;font-weight:500;line-height:15px}
+.clf{display:flex;align-items:center;gap:10px;height:100px}
+.chip{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;display:flex;gap:8px;align-items:center;height:33px}
+.chip span{font-size:12px;color:#8a8a8a}
+.chip b{font-size:12.5px;font-weight:500}
+.clsearch{margin-left:auto;width:300px;border:1px solid #e0e0e0;border-radius:8px;padding:8px 12px;display:flex;gap:8px;align-items:center;height:33px}
+.clsearch input{border:0;outline:0;font:12.5px var(--font);flex:1;min-width:0;background:transparent;color:#0f0f0f;padding:0}
+.clsearch input::placeholder{color:#8a8a8a}
+.clog{background:#fff;border-radius:16px;padding:5px 24px 24px;display:flex;flex-direction:column;gap:16px}
+.clog h3{margin:0;font-size:18px;font-weight:600;line-height:22px}
+.clog .sub{margin:4px 0 0;font-size:12.5px;color:#8a8a8a;line-height:15px}
+.clt{display:flex;flex-direction:column}
+.clh,.clr{display:flex;align-items:center}
+.clh{padding:10px 0;border-bottom:1px solid #e0e0e0}
+.clh div{font-size:10px;font-weight:500;color:#8a8a8a;letter-spacing:.08em;line-height:12px}
+.clr{padding:14px 0;border-bottom:1px solid #ececec;min-height:49px}
+.clr > div{flex:none;padding-right:12px}
+.clr .dt{font-size:12.5px;font-weight:500}
+.clr .rs{font-size:13px;font-weight:600}
+.clr .ss,.clr .cb2{font-size:13px}
+.clr .nt{font-size:12px;color:#5e5e5e;padding-right:0}
+</style>
+</head>
+<body>
+<div class="stage" id="stage"><div class="app" id="app"></div></div>
+<script>
+/* ---------- Icons exported from the Figma file ---------- */
+const IC = {
+ updown:'<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 4.5L6 2.5L8 4.5" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" stroke="#0F0F0F"/><path d="M4 7.5L6 9.5L8 7.5" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" stroke="#0F0F0F"/></svg>',
+ dash:'<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#5E5E5E" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2.25H6.75C7.16421 2.25 7.5 2.58579 7.5 3V6.75C7.5 7.16421 7.16421 7.5 6.75 7.5H3C2.58579 7.5 2.25 7.16421 2.25 6.75V3C2.25 2.58579 2.58579 2.25 3 2.25Z"/><path d="M11.25 2.25H15C15.4142 2.25 15.75 2.58579 15.75 3V6.75C15.75 7.16421 15.4142 7.5 15 7.5H11.25C10.8358 7.5 10.5 7.16421 10.5 6.75V3C10.5 2.58579 10.8358 2.25 11.25 2.25Z"/><path d="M3 10.5H6.75C7.16421 10.5 7.5 10.8358 7.5 11.25V15C7.5 15.4142 7.16421 15.75 6.75 15.75H3C2.58579 15.75 2.25 15.4142 2.25 15V11.25C2.25 10.8358 2.58579 10.5 3 10.5Z"/><path d="M11.25 10.5H15C15.4142 10.5 15.75 10.8358 15.75 11.25V15C15.75 15.4142 15.4142 15.75 15 15.75H11.25C10.8358 15.75 10.5 15.4142 10.5 15V11.25C10.5 10.8358 10.8358 10.5 11.25 10.5Z"/></svg>',
+ trip:'<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2.25 8.25L16.5 1.5L9.75 15.75L8.25 9.75L2.25 8.25Z" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" stroke="#5E5E5E"/></svg>',
+ live:'<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M16.5 9H13.5L11.25 15.75L6.75 2.25L4.5 9H1.5" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" stroke="#5E5E5E"/></svg>',
+ veh:'<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#5E5E5E" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"><path d="M0.75 2.25H12V12H0.75V2.25Z"/><path d="M12 6H15L17.25 8.25V12H12V6Z"/><path d="M6 13.875C6 14.9105 5.16053 15.75 4.125 15.75C3.08947 15.75 2.25 14.9105 2.25 13.875C2.25 12.8395 3.08947 12 4.125 12C5.16053 12 6 12.8395 6 13.875Z"/><path d="M15.75 13.875C15.75 14.9105 14.9105 15.75 13.875 15.75C12.8395 15.75 12 14.9105 12 13.875C12 12.8395 12.8395 12 13.875 12C14.9105 12 15.75 12.8395 15.75 13.875Z"/></svg>',
+ drv:'<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#5E5E5E" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"><path d="M12.75 15.75V14.25C12.75 13.4544 12.4339 12.6913 11.8713 12.1287C11.3087 11.5661 10.5456 11.25 9.75 11.25H3.75C2.95435 11.25 2.19129 11.5661 1.62868 12.1287C1.06607 12.6913 0.75 13.4544 0.75 14.25V15.75"/><path d="M9.75 5.25C9.75 6.90685 8.40685 8.25 6.75 8.25C5.09315 8.25 3.75 6.90685 3.75 5.25C3.75 3.59315 5.09315 2.25 6.75 2.25C8.40685 2.25 9.75 3.59315 9.75 5.25Z"/><path d="M17.25 15.7502V14.2502C17.2545 13.5816 17.0356 12.9307 16.6279 12.4008C16.2203 11.8709 15.6473 11.4923 15 11.3252"/><path d="M12 2.3252C12.6628 2.47625 13.2546 2.84793 13.6786 3.37935C14.1025 3.91076 14.3334 4.5704 14.3334 5.2502C14.3334 5.92999 14.1025 6.58963 13.6786 7.12104C13.2546 7.65246 12.6628 8.02414 12 8.1752"/></svg>',
+ chev:'<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3.5 5.25L7 8.75L10.5 5.25" stroke-width="1.05" stroke-linecap="round" stroke-linejoin="round" stroke="#0F0F0F"/></svg>',
+ vend:'<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#5E5E5E" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.25H15C15.8284 5.25 16.5 5.92157 16.5 6.75V14.25C16.5 15.0784 15.8284 15.75 15 15.75H3C2.17157 15.75 1.5 15.0784 1.5 14.25V6.75C1.5 5.92157 2.17157 5.25 3 5.25Z"/><path d="M12 15.75V3.75C12 3.35218 11.842 2.97064 11.5607 2.68934C11.2794 2.40804 10.8978 2.25 10.5 2.25H7.5C7.10218 2.25 6.72064 2.40804 6.43934 2.68934C6.15804 2.97064 6 3.35218 6 3.75V15.75"/></svg>',
+ shield:'<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 16.5C9 16.5 15 13.5 15 9V3.75L9 1.5L3 3.75V9C3 13.5 9 16.5 9 16.5Z" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" stroke="#5E5E5E"/></svg>',
+ bell:'<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#5E5E5E" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 6C13.5 4.80653 13.0259 3.66193 12.182 2.81802C11.3381 1.97411 10.1935 1.5 9 1.5C7.80653 1.5 6.66193 1.97411 5.81802 2.81802C4.97411 3.66193 4.5 4.80653 4.5 6C4.5 11.25 2.25 12.75 2.25 12.75H15.75C15.75 12.75 13.5 11.25 13.5 6Z"/><path d="M10.2766 15.75C10.142 15.9671 9.95432 16.1462 9.7312 16.2704C9.50808 16.3946 9.25693 16.4598 9.00156 16.4598C8.74619 16.4598 8.49505 16.3946 8.27193 16.2704C8.0488 16.1462 7.86109 15.9671 7.72656 15.75"/></svg>',
+ rep:'<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#5E5E5E" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 15V7.5"/><path d="M9 15V3"/><path d="M4.5 15V10.5"/></svg>',
+ set:'<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#5E5E5E" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"><path d="M11.25 9C11.25 10.2426 10.2426 11.25 9 11.25C7.75736 11.25 6.75 10.2426 6.75 9C6.75 7.75736 7.75736 6.75 9 6.75C10.2426 6.75 11.25 7.75736 11.25 9Z"/><path d="M9 1.5V3.75M9 14.25V16.5M1.5 9H3.75M14.25 9H16.5M3.675 3.675L5.25 5.25M12.75 12.75L14.325 14.325M3.675 14.325L5.25 12.75M12.75 5.25L14.325 3.675"/></svg>',
+ help:'<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#5E5E5E" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 9C16.5 13.1421 13.1421 16.5 9 16.5C4.85786 16.5 1.5 13.1421 1.5 9C1.5 4.85786 4.85786 1.5 9 1.5C13.1421 1.5 16.5 4.85786 16.5 9Z"/><path d="M6.82812 6.74995C7.01469 6.26368 7.36418 5.85719 7.81698 5.59982C8.26978 5.34245 8.79785 5.25013 9.31111 5.33863C9.82437 5.42712 10.291 5.69094 10.6315 6.08508C10.972 6.47922 11.1652 6.97928 11.1781 7.49995C11.1781 8.99995 8.92812 9.74995 8.92812 9.74995"/><path d="M9 12.75H9.0075"/></svg>',
+ moon:'<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M15.7518 9.6C15.6324 10.8758 15.1522 12.0912 14.3675 13.1042C13.5828 14.1173 12.5259 14.886 11.3205 15.3205C10.115 15.7551 8.8108 15.8376 7.56021 15.5583C6.30962 15.2791 5.16436 14.6496 4.25828 13.7436C3.3522 12.8375 2.72275 11.6922 2.44349 10.4416C2.16424 9.19104 2.24672 7.8868 2.6813 6.68136C3.11587 5.47591 3.88459 4.41907 4.8976 3.63436C5.9106 2.84964 7.12604 2.36948 8.40184 2.25C7.64359 3.261 7.27546 4.51159 7.36505 5.77217C7.45464 7.03274 7.99592 8.2187 8.88953 9.11231C9.78314 10.0059 10.9691 10.5472 12.2297 10.6368C13.4903 10.7264 14.7408 10.3583 15.7518 9.6Z" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" stroke="#5E5E5E"/></svg>',
+ srch:c=>`<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="${c}" stroke-width="1.05" stroke-linecap="round" stroke-linejoin="round"><path d="M11.0833 6.41667C11.0833 8.994 8.994 11.0833 6.41667 11.0833C3.83934 11.0833 1.75 8.994 1.75 6.41667C1.75 3.83934 3.83934 1.75 6.41667 1.75C8.994 1.75 11.0833 3.83934 11.0833 6.41667Z"/><path d="M12.2484 12.2499L9.71094 9.7124"/></svg>`,
+ cal:'<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#5E5E5E" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 2H9.5C10.0523 2 10.5 2.44772 10.5 3V10C10.5 10.5523 10.0523 11 9.5 11H2.5C1.94772 11 1.5 10.5523 1.5 10V3C1.5 2.44772 1.94772 2 2.5 2Z"/><path d="M8 1V3"/><path d="M4 1V3"/><path d="M1.5 5H10.5"/></svg>',
+ dn:'<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2.5 3.75L5 6.25L7.5 3.75" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round" stroke="#5E5E5E"/></svg>',
+ filt:'<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#034373" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.66406 4H13.3307"/><path d="M4.66406 8H11.3307"/><path d="M6.66406 12H9.33073"/></svg>',
+ tick:'<svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M9.16927 2.75L4.1276 7.79167L1.83594 5.5" stroke-width="1.375" stroke-linecap="round" stroke-linejoin="round" stroke="white"/></svg>',
+ cbtick:'<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M10 3L4.5 8.5 2 6" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+ flagRed:'<svg class="red" width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="0.416667" y="0.416667" width="19.1667" height="19.1667" rx="9.58333" fill="white"/><rect x="0.416667" y="0.416667" width="19.1667" height="19.1667" rx="9.58333" stroke="#E0E0E0" stroke-width="0.833333"/><path d="M6.59375 6.6665H11.4549L10.7257 8.33317L11.4549 9.99984H6.59375V6.6665Z" fill="#DC2626"/><path d="M6.59375 13.7498V6.6665M6.59375 6.6665H11.4549L10.7257 8.33317L11.4549 9.99984H6.59375V6.6665Z" stroke-width="0.833333" stroke="#DC2626"/></svg>',
+ flagBlk:'<svg class="blk" width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="0.416667" y="0.416667" width="19.1667" height="19.1667" rx="9.58333" fill="white"/><rect x="0.416667" y="0.416667" width="19.1667" height="19.1667" rx="9.58333" stroke="#E0E0E0" stroke-width="0.833333"/><path d="M6.59375 13.7498V6.6665M6.59375 6.6665H11.4549L10.7257 8.33317L11.4549 9.99984H6.59375V6.6665Z" stroke-width="0.833333" stroke="#0F0F0F"/></svg>',
+ x:'<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#0F0F0F" stroke-width="1.3" stroke-linecap="round"><path d="M3.5 3.5l7 7M10.5 3.5l-7 7"/></svg>',
+ dlw:'<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="1.28333" stroke-linecap="round" stroke-linejoin="round"><path d="M7 1.75V8.75"/><path d="M4.08594 5.83337L7.0026 8.75004L9.91927 5.83337"/><path d="M2.33594 11.6666H11.6693"/></svg>',
+ dl:'<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#0F0F0F" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2v7M4.1 6.1L7 9l2.9-2.9M2.35 12h9.3"/></svg>',
+ weekly:'<svg width="81" height="16" viewBox="0 0 81 16" fill="none"><text fill="#5E5E5E" font-family="Inter" font-size="12"><tspan x="0" y="12.3636">Weekly</tspan></text><path d="M50 6.5L53 9.5L56 6.5" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" stroke="#5E5E5E"/><circle cx="73" cy="3" r="1.2" fill="#5E5E5E"/><circle cx="73" cy="8" r="1.2" fill="#5E5E5E"/><circle cx="73" cy="13" r="1.2" fill="#5E5E5E"/></svg>',
+};
+const CH0 = '<svg width="640" height="260" viewBox="0 0 640 260" fill="none"><path d="M34 228H640" stroke="#F1F1F1"/><path d="M34 173H640" stroke="#F1F1F1"/><path d="M34 118H640" stroke="#F1F1F1"/><path d="M34 63H640" stroke="#F1F1F1"/><path d="M34 8H640" stroke="#F1F1F1"/><g fill="#8F8F8F" font-family="Inter" font-size="10"><text x="0" y="230.636">0</text><text x="0" y="175.636">1.5</text><text x="0" y="120.636">3</text><text x="0" y="65.6364">4.5</text><text x="0" y="10.6364">6</text></g><g stroke="#F6F6F6"><path d="M34 8V228"/><path d="M88.18 8V228"/><path d="M142.37 8V228"/><path d="M196.55 8V228"/><path d="M250.73 8V228"/><path d="M304.91 8V228"/><path d="M359.09 8V228"/><path d="M413.27 8V228"/><path d="M467.45 8V228"/><path d="M521.63 8V228"/><path d="M575.82 8V228"/><path d="M630 8V228"/></g><path d="M34 37.3333L88.1818 44.6667L142.364 30L196.545 41L250.727 48.3333L304.909 59.3333L359.091 66.6667L413.273 77.6667L467.455 85L521.636 96L575.818 103.333L630 114.333" stroke-width="2" stroke-linejoin="round" stroke="#97B9DF"/><circle cx="630" cy="114.333" r="4" fill="#97B9DF" stroke="white" stroke-width="2"/><path d="M34 77.6665L88.1818 66.6665L142.364 81.3332L196.545 70.3332L250.727 84.9998L304.909 88.6665L359.091 92.3332L413.273 99.6665L467.455 107L521.636 110.667L575.818 118L630 121.667" stroke-width="2" stroke-linejoin="round" stroke="#034373"/><circle cx="630" cy="121.667" r="4" fill="#034373" stroke="white" stroke-width="2"/><path d="M34 132.667L88.1818 125.333L142.364 118L196.545 121.667L250.727 114.333L304.909 107L359.091 118L413.273 125.333L467.455 136.333L521.636 147.333L575.818 154.667L630 158.333" stroke-width="2" stroke-linejoin="round" stroke="#DF0021"/><circle cx="630" cy="158.333" r="4" fill="#DF0021" stroke="white" stroke-width="2"/><path d="M34 162L88.1818 167.5L142.364 158.333L196.545 162L250.727 169.333L304.909 165.667L359.091 173L413.273 176.667L467.455 180.333L521.636 176.667L575.818 184L630 187.667" stroke-width="2" stroke-linejoin="round" stroke="#8F8F8F"/><circle cx="630" cy="187.667" r="4" fill="#8F8F8F" stroke="white" stroke-width="2"/><g fill="#8F8F8F" font-family="Inter" font-size="10"><text x="20.08" y="247.636">3 Aug</text><text x="128.42" y="247.636">4 Aug</text><text x="236.95" y="247.636">5 Aug</text><text x="345.24" y="247.636">6 Aug</text><text x="453.86" y="247.636">7 Aug</text><text x="562" y="247.636">8 Aug</text></g></svg>';
+const CH1 = '<svg width="640" height="260" viewBox="0 0 640 260" fill="none"><defs><linearGradient id="g1" x1="34" y1="59.33" x2="34" y2="228" gradientUnits="userSpaceOnUse"><stop stop-color="#034373" stop-opacity="0.16"/><stop offset="1" stop-color="#034373" stop-opacity="0"/></linearGradient></defs><path d="M34 228H640" stroke="#F1F1F1"/><path d="M34 173H640" stroke="#F1F1F1"/><path d="M34 118H640" stroke="#F1F1F1"/><path d="M34 63H640" stroke="#F1F1F1"/><path d="M34 8H640" stroke="#F1F1F1"/><g fill="#8F8F8F" font-family="Inter" font-size="10"><text x="0" y="230.636">60</text><text x="0" y="175.636">67.5</text><text x="0" y="120.636">75</text><text x="0" y="65.6364">82.5</text><text x="0" y="10.6364">90</text></g><g stroke="#F6F6F6"><path d="M34 8V228"/><path d="M88.18 8V228"/><path d="M142.37 8V228"/><path d="M196.55 8V228"/><path d="M250.73 8V228"/><path d="M304.91 8V228"/><path d="M359.09 8V228"/><path d="M413.27 8V228"/><path d="M467.45 8V228"/><path d="M521.63 8V228"/><path d="M575.82 8V228"/><path d="M630 8V228"/></g><path d="M34 81.33H640" stroke="#034373" stroke-dasharray="3 3"/><text fill="#8F8F8F" font-family="Inter" font-size="10" x="590.37" y="75.97">Target 80</text><path d="M34 228V92.3335L88.1818 90.1335L142.364 93.8002L196.545 88.6668L250.727 85.0002L304.909 82.8002L359.091 77.6668L413.273 74.0002L467.455 70.3335L521.636 66.6668L575.818 63.0002L630 59.3335V228H34Z" fill="url(#g1)"/><path d="M34 92.3335L88.1818 90.1335L142.364 93.8002L196.545 88.6668L250.727 85.0002L304.909 82.8002L359.091 77.6668L413.273 74.0002L467.455 70.3335L521.636 66.6668L575.818 63.0002L630 59.3335" stroke-width="2" stroke-linejoin="round" stroke="#034373"/><circle cx="630" cy="59.33" r="4" fill="#034373" stroke="white" stroke-width="2"/><path d="M34 184H88.1818L142.364 191.333L196.545 184L250.727 176.667L304.909 162L359.091 147.333L413.273 132.667L467.455 118L521.636 110.667L575.818 96.0002L630 81.3335" stroke-width="2" stroke-linejoin="round" stroke="#076BB6"/><circle cx="630" cy="81.33" r="4" fill="#076BB6" stroke="white" stroke-width="2"/><g fill="#8F8F8F" font-family="Inter" font-size="10"><text x="20.08" y="247.636">3 Aug</text><text x="128.42" y="247.636">4 Aug</text><text x="236.95" y="247.636">5 Aug</text><text x="345.24" y="247.636">6 Aug</text><text x="453.86" y="247.636">7 Aug</text><text x="562" y="247.636">8 Aug</text></g></svg>';
+
+/* ---------- Content from the Figma screens ---------- */
+// [sno, name, id, model, plate, trip, trips7d, shift, safety, pills[], severity, status, flagged]
+const ALL = [
+ [1,"Devraj Kumar","DRV-2208","Maruti Dzire","KA-03-MB-8120","TRP-48213",33,53,50,["SOS","DMS x2"],"Critical","Suspended",1],
+ [2,"Rohan Sharma","DRV-6104","Hyundai Aura","KA-05-AB-4921","TRP-48206",30,61,60,[],"Pattern","Warning issued",1],
+ [3,"Suresh Yadav","DRV-3391","Maruti Dzire","KA-01-MJ-2083","TRP-48199",36,67,30,["Overspeeding"],"Critical","No action",0],
+ [4,"Vikas Chauhan","DRV-7820","Tata Tigor","KA-53-D-9134","TRP-48192",23,48,80,["Rash driving","DMS x2"],"Critical","Suspended",1],
+ [5,"Amit Sen","DRV-9014","Toyota Etios","KA-04-E-4421","TRP-48185",38,91,100,[],"Isolated","No action",1],
+ [6,"Prasad Nair","DRV-4412","Honda Amaze","KA-02-HN-7716","TRP-48178",40,84,92,[],"Isolated","Under watch",1],
+ [7,"Manoj Tiwari","DRV-5127","Mahindra XUV300","KA-51-MX-3308","TRP-48171",31,72,71,["Overspeeding"],"Pattern","Warning issued",0],
+ [8,"Arun Reddy","DRV-8830","Hyundai Aura","KA-05-AB-1187","TRP-48164",21,58,44,["Rash driving","Overspeeding"],"Critical","Warning issued",1],
+ [9,"Karthik Iyer","DRV-2951","Maruti Dzire","KA-03-MC-5542","TRP-48157",41,88,95,[],"Isolated","No action",1],
+ [10,"Sanjay Gupta","DRV-6678","Tata Tigor","KA-53-D-2260","TRP-48150",28,76,66,["DMS x3"],"Pattern","Under watch",1],
+ [11,"Imran Pasha","DRV-3305","Toyota Etios","KA-04-E-9013","TRP-48143",15,44,38,["SOS","Rash driving","+1"],"Critical","No action",0],
+ [12,"Faisal Khan","DRV-7741","Honda Amaze","KA-02-HN-6025","TRP-48136",32,69,74,[],"Isolated","Under watch",1],
+ [13,"Lokesh Naidu","DRV-1899","Maruti Dzire","KA-01-MJ-4471","TRP-48129",42,93,98,[],"Isolated","No action",0],
+ [14,"Harish Rao","DRV-5560","Mahindra XUV300","KA-51-MX-8820","TRP-48122",26,63,58,["Overspeeding","DMS x2"],"Pattern","Warning issued",1],
+ [15,"Naveen Kumar","DRV-4086","Hyundai Aura","KA-05-AB-3354","TRP-48115",35,79,82,[],"Isolated","No action",1],
+ [16,"Ramesh Babu","DRV-9273","Tata Tigor","KA-53-D-7709","TRP-48108",24,55,49,["Overspeeding"],"Pattern","Warning issued",1],
+ [17,"Deepak Joshi","DRV-3718","Toyota Etios","KA-04-E-1146","TRP-48101",37,86,90,[],"Isolated","Under watch",1],
+ [18,"Yusuf Ali","DRV-6042","Maruti Dzire","KA-03-MB-6638","TRP-48094",30,71,77,["DMS x2"],"Critical","Suspended",1],
+ [19,"Mohan Das","DRV-2284","Honda Amaze","KA-02-HN-0952","TRP-48087",31,66,61,[],"Isolated","No action",1],
+ [20,"Gopal Singh","DRV-8157","Maruti Dzire","KA-01-MJ-9027","TRP-48080",34,82,85,["Rash driving"],"Isolated","Under watch",1],
+];
+const RISK = [
+ [1,"Suresh Yadav","DRV-3391","Maruti Dzire","KA-01-MJ-2083","TRP-48199",36,67,30,["Overspeeding x3"],"Critical","Suspended",0],
+ [2,"Imran Pasha","DRV-3305","Toyota Etios","KA-04-E-9013","TRP-48143",15,44,38,["SOS","Rash driving","+1"],"Critical","Suspended",0],
+ [3,"Arun Reddy","DRV-8830","Hyundai Aura","KA-05-AB-1187","TRP-48164",21,58,44,["Rash driving","Overspeeding"],"Critical","Warning issued",1],
+ [4,"Ramesh Babu","DRV-9273","Tata Tigor","KA-53-D-7709","TRP-48108",24,55,49,["Overspeeding"],"Pattern","Warning issued",1],
+ [5,"Devraj Kumar","DRV-2208","Maruti Dzire","KA-03-MB-8120","TRP-48213",33,53,50,["SOS","DMS x2"],"Critical","Suspended",1],
+ [6,"Harish Rao","DRV-5560","Mahindra XUV300","KA-51-MX-8820","TRP-48122",26,63,58,["Overspeeding","DMS x2"],"Pattern","Warning issued",1],
+ [7,"Rohan Sharma","DRV-6104","Hyundai Aura","KA-05-AB-4921","TRP-48206",30,61,60,["Driver fatigue x2"],"Pattern","Warning issued",1],
+ [8,"Mohan Das","DRV-2284","Honda Amaze","KA-02-HN-0952","TRP-48087",31,66,61,["DMS x2"],"Pattern","Under watch",1],
+ [9,"Venkat Rao","DRV-4521","Hyundai Aura","KA-05-KR-4521","TRP-48079",27,63,62,["Driver fatigue"],"Pattern","Under watch",0],
+ [10,"Vijay Menon","DRV-3874","Maruti Dzire","KA-03-VM-3874","TRP-48071",31,65,64,["Rash driving x2"],"Pattern","Warning issued",0],
+ [11,"Dinesh Nair","DRV-6612","Honda Amaze","KA-02-DN-6612","TRP-48064",29,66,65,["DMS x2"],"Critical","Under watch",0],
+ [12,"Sanjay Gupta","DRV-6678","Tata Tigor","KA-53-D-2260","TRP-48150",28,76,66,["DMS x3"],"Pattern","Under watch",1],
+ [13,"Ajay Mehta","DRV-6489","Hyundai Creta","KA-53-HC-4412","TRP-48925",28,65,67,["Rash driving"],"Pattern","Under watch",0],
+ [14,"Sunil Gowda","DRV-1957","Toyota Etios","KA-04-SG-1957","TRP-48057",33,70,67,["Overspeeding x2"],"Pattern","Warning issued",0],
+ [15,"Suresh Patil","DRV-9143","Ford EcoSport","KA-54-FE-1234","TRP-48672",35,70,68,["Overspeeding"],"Pattern","Warning issued",0],
+ [16,"Rajesh Shetty","DRV-8309","Tata Tigor","KA-01-RS-8309","TRP-48050",26,68,69,["Driver fatigue"],"Critical","Under watch",0],
+ [17,"Manoj Tiwari","DRV-5127","Mahindra XUV300","KA-51-MX-3308","TRP-48171",31,72,71,["Overspeeding"],"Pattern","Warning issued",0],
+ [18,"Ravi Kumar","DRV-7345","Toyota Innova","KA-55-TI-7689","TRP-47234",45,80,72,["Rash driving x2"],"Pattern","Under watch",0],
+ [19,"Faisal Khan","DRV-7741","Honda Amaze","KA-02-HN-6025","TRP-48136",32,69,74,["DMS"],"Isolated","Under watch",1],
+];
+const TOPN = [["Anil Verma","DRV-3012","Maruti Dzire","KA-03-AK-3012","TRP-48300",41,96,98],["Bhaskar Rao","DRV-2145","Toyota Etios","KA-04-BR-2145","TRP-48293",38,93,97],["Chetan Shetty","DRV-5521","Hyundai Aura","KA-05-CS-5521","TRP-48286",40,92,96],["Dilip Menon","DRV-6610","Honda Amaze","KA-02-DM-6610","TRP-48279",36,91,95],["Eshwar Naik","DRV-7032","Tata Tigor","KA-01-EN-7032","TRP-48272",39,90,94],["Farhan Sheikh","DRV-8814","Maruti Dzire","KA-03-FS-8814","TRP-48265",34,89,93],["Girish Hegde","DRV-1907","Toyota Etios","KA-04-GH-1907","TRP-48258",37,88,92],["Hari Prasad","DRV-4478","Hyundai Aura","KA-05-HV-4478","TRP-48251",35,87,91],["Irfan Qureshi","DRV-9051","Honda Amaze","KA-02-IQ-9051","TRP-48244",33,86,90],["Jayanth Kumar","DRV-3369","Tata Tigor","KA-01-JK-3369","TRP-48237",32,85,89],["Kiran Desai","DRV-6240","Maruti Dzire","KA-03-KD-6240","TRP-48230",30,84,88],["Lokesh Naidu","DRV-2718","Hyundai Aura","KA-05-LN-2718","TRP-48223",31,84,87],["Manish Dubey","DRV-5903","Maruti Dzire","KA-03-MP-5903","TRP-48216",36,83,86],["Naveen Bhat","DRV-7186","Tata Tigor","KA-01-NB-7186","TRP-48209",29,82,85],["Om Prakash","DRV-1624","Honda Amaze","KA-02-OP-1624","TRP-48202",33,83,84],["Pradeep Shenoy","DRV-8350","Toyota Etios","KA-04-PS-8350","TRP-48195",35,81,83],["Qasim Ali","DRV-3947","Maruti Dzire","KA-03-QA-3947","TRP-48188",28,80,82],["Raghav Iyer","DRV-6072","Hyundai Aura","KA-05-RI-6072","TRP-48181",32,80,81],["Sandeep Gowda","DRV-2290","Honda Amaze","KA-02-SG-2290","TRP-48174",30,79,80],["Tejas Hegde","DRV-4815","Tata Tigor","KA-01-TH-4815","TRP-48167",27,78,80]]
+ .map((r,i) => [i+1, ...r, [], "Isolated", "No action", 0]);
+// Flagged: [name, id, model, plate, trips, shift, safety, pills[], severity, status, last]
+const FLAG = [
+ ["Devraj Kumar","DRV-2208","Maruti Dzire","KA-03-MB-8120",33,53,52,["SOS","DMS x2"],"Critical","Suspended","Never"],
+ ["Manoj Kulkarni","DRV-4417","Maruti Dzire","KA-02-HK-7710",30,58,58,["Rash driving x3"],"Pattern","No action","45d ago"],
+ ["Imran Pasha","DRV-5590","Toyota Etios","KA-05-MN-3302",36,61,64,["Overspeeding x4","DMS"],"Pattern","No action","21d ago"],
+ ["Rakesh Naik","DRV-3052","Tata Tigor","KA-01-PQ-1189",23,66,66,["DMS x2"],"Pattern","No action","30d ago"],
+ ["Suresh Babu","DRV-1876","Hyundai Aura","KA-04-RS-5521",38,68,68,["Overspeeding x2"],"Isolated","No action","Never"],
+ ["Arun Reddy","DRV-8830","Hyundai Aura","KA-05-AB-1187",40,58,49,["Rash driving x4","Overspeeding"],"Pattern","Warning issued","60d ago"],
+ ["Faisal Khan","DRV-7741","Honda Amaze","KA-02-HN-6025",31,60,55,["DMS"],"Isolated","Under watch","Never"],
+ ["Harish Rao","DRV-5560","Mahindra XUV300","KA-51-MX-8820",21,63,61,["Driver fatigue x4"],"Pattern","Warning issued","18d ago"],
+ ["Ramesh Babu","DRV-9273","Tata Tigor","KA-53-D-7709",41,55,57,["Overspeeding x3","DMS x2"],"Pattern","Warning issued","52d ago"],
+ ["Vikas Chauhan","DRV-7820","Tata Tigor","KA-53-D-9134",28,48,48,["Driver fatigue","DMS x2"],"Critical","Suspended","Never"],
+ ["Sanjay Gupta","DRV-6678","Tata Tigor","KA-53-D-2260",15,70,66,["DMS x2"],"Isolated","Under watch","40d ago"],
+ ["Karthik Iyer","DRV-2951","Maruti Dzire","KA-03-MC-5542",32,72,69,["Rash driving"],"Isolated","No action","Never"],
+ ["Naveen Kumar","DRV-4086","Hyundai Aura","KA-05-AB-3354",42,64,63,["Overspeeding x3"],"Pattern","No action","25d ago"],
+ ["Yusuf Ali","DRV-6042","Maruti Dzire","KA-03-MB-6638",26,62,59,["SOS","DMS x3"],"Critical","Suspended","Never"],
+ ["Mohan Das","DRV-2284","Honda Amaze","KA-02-HN-0952",35,66,67,["Driver fatigue"],"Isolated","No action","35d ago"],
+ ["Gopal Singh","DRV-8157","Maruti Dzire","KA-01-MJ-9027",24,65,62,["DMS x2"],"Pattern","Under watch","28d ago"],
+ ["Deepak Joshi","DRV-3718","Toyota Etios","KA-04-E-1146",37,63,65,["Rash driving x2","DMS"],"Pattern","Under watch","33d ago"],
+ ["Prasad Nair","DRV-4412","Honda Amaze","KA-02-HN-7716",30,61,60,["Overspeeding x2"],"Isolated","Under watch","Never"],
+ ["Amit Sen","DRV-9014","Toyota Etios","KA-04-E-4421",31,70,68,["Driver fatigue"],"Isolated","No action","90d ago"],
+ ["Rohan Sharma","DRV-6104","Hyundai Aura","KA-05-AB-4921",34,66,64,["Rash driving x3","Overspeeding"],"Pattern","Warning issued","20d ago"],
+];
+const PILL = {SOS:["#c0264a","#ffffff"],DMS:["#fff4cc","#8a6a00"],Overspeeding:["#fdebd6","#9a5a00"],"Rash driving":["#fce8ee","#c0264a"],"Driver fatigue":["#e8e4f8","#4a3a9a"],"+1":["#f2f2f2","#5e5e5e"]};
+const SEV = {Critical:["#fce8ee","#c0264a"],Pattern:["#fff4cc","#8a6a00"],Isolated:["#f2f2f2","#5e5e5e"]};
+const DOT = {Suspended:"#c0264a","Warning issued":"#f2a33a","Under watch":"#8a6a00"};
+
+const SCREENS = {
+  all:{tab:0, rows:ALL, count:"512 drivers", foot:"Showing 1 to 20 of 512 registered active drivers", pages:["‹","1","2","3","…","26","›"]},
+  "high-performing":{tab:1, rows:TOPN, count:"38 drivers", foot:"Showing 1 to 20 of 38 registered high performing drivers", pages:["‹","1","2","3","…","2","›"]},
+  "high-risk":{tab:2, rows:RISK, count:"37 drivers", foot:"Showing 1 to 19 of 37 registered high risk drivers", pages:["‹","1","2","3","…","26","›"]},
+  flagged:{tab:3, flagged:true, count:"Flagged drivers", foot:"Showing 1 to 20 of 44 flagged drivers"},
+};
+const TABS = [["all","All drivers (184)"],["high-performing","High Performing Drivers"],["high-risk","High Risk Drivers"],["flagged","Flagged Drivers"]];
+const FILTERS = {
+  shift:{title:"Shift score", opts:["Below 60","60–79","80 and above"], pos:[961,310]},
+  safety:{title:"Safety score", opts:["Below 60","60–79","80 and above"], pos:[1041,310]},
+  trig:{title:"Reasons", opts:["SOS","DMS","Overspeeding","Rash driving","Driver fatigue","None"], pos:[1163,310], cls:"reasons"},
+  sev:{title:"Severity", opts:["Critical","Pattern","Isolated"], pos:[1366,310]},
+  cs:{title:"Counselling status", opts:["No action","Under watch","Warning issued","Suspended","Appreciated"], pos:[1410,310]},
+};
+
+/* ---------- State ---------- */
+const S = { profile:null, lastReg:"all", bsel:"all", rng:{s:"6M", b:"6M"}, clq:"", open:null, route:"overview", sel:new Set(), filters:{}, q:"", saved:false, pop:null, modal:false, act:"watch", days:14, comment:"Review the selected drivers after 14 days.", commentEdited:false };
+const flags = {}; // name -> bool, shared across screens
+const flagOrder = []; // drivers flagged in this session that are not in the original flagged list, newest first
+const FLAG_NAMES = new Set(FLAG.map(r => r[0]));
+function srcRow(name){ for (const arr of [ALL, RISK, TOPN]) { const r = arr.find(a => a[1] === name); if (r) return r; } return null; }
+function setFlag(name, on){ flags[name] = on; const i = flagOrder.indexOf(name); if (i > -1) flagOrder.splice(i, 1); if (on && !FLAG_NAMES.has(name)) flagOrder.unshift(name); }
+const isFlag = (name, def) => name in flags ? flags[name] : !!def;
+const app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ---------- Shared chrome ---------- */
+function leftMenu(active){
+  const mi = (key, icon, label, extra="") => `<button class="mi ${active===key?"on":""}" data-nav="${key}">${icon||""}<span class="grow">${label}</span>${extra}</button>`;
+  const sub = (key, label) => `<button class="mi sub ${active===key?"on":""}" data-nav="${key}">${label}</button>`;
+  return `<aside class="left">
+    <div class="brand"><div class="logo"><svg width="20" height="20" viewBox="0 0 20 20"><rect x="4" y="4" width="12" height="4" rx="1.2" fill="#fff"/><rect x="4" y="9.5" width="8" height="3" rx="1" fill="#fff"/><rect x="4" y="14" width="4" height="2" rx="1" fill="#fff"/></svg></div><b>RideBuddy</b>${IC.updown}</div>
+    <div class="sp12"></div>
+    <div class="sec">Main</div>
+    ${mi("", IC.dash, "Dashboard")}${mi("", IC.trip, "Trip operations")}${mi("", IC.live, "Live tracking")}${mi("", IC.veh, "Vehicles")}
+    <button class="mi on" style="background:#f2f2f2">${IC.drv.replace('stroke="#5E5E5E"','stroke="#0F0F0F"')}<span class="grow" style="color:#0f0f0f;font-weight:600">Drivers</span>${IC.chev}</button>
+    ${sub("overview","Overview")}${sub("","Behaviour trends")}${sub("","Watchlist")}${sub("flagged-nav","Flagged drivers")}${sub("","Driver allocation")}${sub("","Counselling")}${sub("register","Driver register")}
+    ${mi("", IC.vend, "Vendors")}
+    <div class="sec">Safety and insights</div>
+    ${mi("", IC.shield, "Safety logs")}${mi("", IC.bell, "Alerts", '<span class="badge">8</span>')}${mi("", IC.rep, "Reports")}
+    <div class="spacer"></div><div class="rule"></div>
+    ${mi("", IC.set, "Settings")}${mi("", IC.help, "Help and support")}${mi("", IC.moon, "Dark mode")}
+  </aside>`;
+}
+function topbars(changes){
+  return `<div class="top" style="justify-content:flex-end"><div class="av">MI</div></div>
+  <div class="subbar"><div class="chg">${IC.cal}<span>Changes:  ${changes}</span>${IC.dn}</div><span>Last update: 23 Oct, 10:30</span></div>`;
+}
+
+/* ---------- Overview ---------- */
+function overview(){
+  const lg = (c,l) => `<span class="lg"><i style="background:${c}">${IC.tick}</i>${l}</span>`;
+  const op = (t,bg,c) => `<span class="op" style="background:${bg};color:${c}">${t}</span>`;
+  const blue = t => op(t,"#b6d8f3","#034373"), grey = t => op(t,"#f2f1f1","#5e5e5e"), pink = t => op(t,"#fbe3e6","#df0021");
+  const risk = [["Rakesh Naik","DRV-4417 · Metro Rides",58,-6,blue("Due to counsel")],["Imran Pasha","DRV-5590 · SkyCabs Prime",61,-12,pink("Suspended")],["Suresh Babu","DRV-3302 · SkyCabs Prime",66,-11,blue("Due to counsel")],["Mohan Das","DRV-1975 · CityGo",68,-3,grey("Under watch")],["Farhan Sheikh","DRV-6128 · Metro Rides",69,-4,blue("Due to counsel")]];
+  const good = [["Naveen Reddy","DRV-2204 · CityGo",89,"+2",blue("1 point to preferred")],["Ganesh Rao","DRV-3187 · QuickFleet",88,"+1",blue("2 points to preferred")],["Ramesh Gowda","DRV-1456 · Metro Mobility",86,"+4",grey("Eligible for Tier 2")],["Prakash Menon","DRV-5612 · Prime Logix",85,"+2",grey("Eligible for Tier 2")],["Aman Joshi","DRV-4021 · Urban Wheels",84,"+3",grey("Eligible for Tier 2")]];
+  const kpi = (l,v,s,c,bar) => `<div class="kpi"><div class="in"><div class="kl">${l}</div><div class="kv" style="color:${c}">${v}</div><div class="ks">${s}</div></div><div class="bar" style="background:${bar}"></div></div>`;
+  const tile = (l,v) => `<div class="tile"><div class="kl">${l}</div><div class="v">${v}</div></div>`;
+  const table = (title, sub, btn, go, last, rows, sc, dc) => `<div class="col tcol">
+    <div class="shd"><div><h2>${title}</h2><p>${sub}</p></div><button class="btn" data-nav="${go}">${btn}</button></div>
+    <div class="trh"><div class="w374">Driver</div><div class="w50">Score</div><div class="w60">30 days</div><div class="w120">${last}</div></div>
+    ${rows.map(r => `<div class="tr"><div class="w374"><b>${r[0]}</b><small>${r[1]}</small></div><div class="w50 s" style="color:${sc}">${r[2]}</div><div class="w60 d" style="color:${dc}">${r[3]}</div><div class="w120">${r[4]}</div></div>`).join("")}
+  </div>`;
+  return `<div class="app-inner" style="display:flex;width:1680px;height:1503px">${leftMenu("overview")}<div class="main">
+    ${topbars("Last 1 week").replace('background:#d9d9d9','')}
+    <div class="oh"><div><h1>Driver overview</h1><p>184 drivers across 6 fleet vendors · updated 23 Oct, 10:30</p></div><div style="display:flex;gap:8px;align-items:center"><button class="btn">Export</button><button class="btn pri">Run weekly review</button></div></div>
+    <div class="osec">
+      <div class="shd" data-nav="all" style="cursor:pointer"><div><h2>Fleet by safety score</h2><p>184 drivers · where the fleet sits today</p></div><button class="btn" data-nav="all">View register</button></div>
+      <div class="kpis">${kpi("Total drivers","230","70 to 79 · 32%","#000","#034373")}${kpi("High risk","34","Below 70 · 18%","#df0021","#df0021")}${kpi("Good performing drivers","64","80 to 89 · 35%","#000","#97b9df")}${kpi("Preferred drivers","28","90 and above · 15%","#076bb6","#076bb6")}</div>
+      <div class="tiles">${tile("Counselled this month",11)}${tile("Due to be counselled",9)}${tile("Under watch",24)}${tile("Suspended or penalised",9)}</div>
+    </div>
+    <div class="two">
+      <div class="col"><div class="shd"><div><h2>Driver behaviour over time</h2><p>Events per 100 trips, weekly · fleet-wide</p></div>${IC.weekly}</div>
+        <div class="legend">${lg("#97b9df","Over-speeding")}${lg("#034373","Rash driving")}${lg("#df0021","Overspeeding")}${lg("#8f8f8f","DMS")}</div>${CH0}
+        <div class="ins">Over-speeding is down 40% and rash driving events down 27% since weekly reviews started.</div></div>
+      <div class="col"><div class="shd"><div><h2>Safety score over time</h2><p>Average score out of 100, weekly</p></div>${IC.weekly}</div>
+        <div class="legend">${lg("#034373","Fleet average")}${lg("#076bb6","Counselled drivers")}</div>${CH1}
+        <div class="ins">Fleet average passed the 80 target in September. Counselled drivers are up 13 points in 12 weeks.</div></div>
+    </div>
+    <div class="two" style="border-bottom:0">
+      ${table("High-risk drivers","Safety score below 70 · lowest 5 of 34","View all 34","high-risk","Status",risk,"#df0021","#df0021")}
+      ${table("Good performing drivers","Safety score 80 to 89 · top 5 of 64","View all 64","high-performing","Next step",good,"#000","#076bb6")}
+    </div>
+  </div></div>`;
+}
+
+/* ---------- Register ---------- */
+const scoreCol = (v, red) => v < 60 ? red : "#0f0f0f";
+const pillHtml = p => { if (p === "+1") return `<span class="pill" style="background:${PILL["+1"][0]};color:${PILL["+1"][1]}">+1</span>`; const k = Object.keys(PILL).find(k => p.startsWith(k)); return `<span class="pill" style="background:${PILL[k][0]};color:${PILL[k][1]}">${p}</span>`; };
+const trigHtml = ps => ps.length ? ps.map(pillHtml).join("") : `<span class="none">None</span>`;
+const sevHtml = s => `<span class="sev" style="background:${SEV[s][0]};color:${SEV[s][1]}">${s}</span>`;
+const stHtml = s => s === "No action" ? `<span class="noact">No action</span>` : `<span class="st"><i style="background:${DOT[s]||"#16884a"}"></i>${s}</span>`;
+function matches(r){
+  const f = S.filters, p = r.pills;
+  const band = v => v < 60 ? "Below 60" : v < 80 ? "60–79" : "80 and above";
+  if (f.shift && band(r.shift) !== f.shift) return false;
+  if (f.safety && band(r.safety) !== f.safety) return false;
+  if (f.trig) { if (f.trig === "None") { if (p.length) return false; } else if (!p.some(x => x.startsWith(f.trig))) return false; }
+  if (f.sev && r.sev !== f.sev) return false;
+  if (f.cs && r.cs !== f.cs) return false;
+  if (S.q) { const q = S.q.toLowerCase(); if (![r.name, r.id, r.model, r.plate].some(s => s.toLowerCase().includes(q))) return false; }
+  return true;
+}
+function register(key){
+  const sc = SCREENS[key];
+  const rows = sc.flagged ? [...flagOrder.map(n => { const r = srcRow(n); return {name:r[1], id:r[2], model:r[3], plate:r[4], trip:r[5], trips:r[6], shift:r[7], safety:r[8], pills:r[9], sev:r[10], cs:r[11], last:"Flagged today", flag:1}; }),
+      ...FLAG.map(r => ({name:r[0], id:r[1], model:r[2], plate:r[3], trips:r[4], shift:r[5], safety:r[6], pills:r[7], sev:r[8], cs:r[9], last:r[10], flag:1}))].filter(r => isFlag(r.name, 1))
+    : sc.rows.map(r => ({sno:r[0], name:r[1], id:r[2], model:r[3], plate:r[4], trip:r[5], trips:r[6], shift:r[7], safety:r[8], pills:r[9], sev:r[10], cs:r[11], flag:r[12]}));
+  const vis = rows.filter(matches);
+  const W = sc.flagged ? [26,200,205,90,95,122,203,109,145] : [26,40,200,205,100,90,86,122,203,109,145];
+  const flagX = sc.flagged ? 216 : 256;
+  const allSel = vis.length && vis.every(r => S.sel.has(r.name));
+  const hdr = (label, k) => k ? `<button data-filter="${k}" class="${S.filters[k]?"act":""}">${label}</button>` : label;
+  const H = sc.flagged ? ["", "Driver","Vehicle","Trips (7D)",hdr("Shift score ▾","shift"),hdr("Safety score ▾","safety"),hdr("Triggers / reasons ▾","trig"),hdr("Severity ▾","sev"),hdr("Counselling status ▾","cs")]
+    : ["","S.No","Driver","Vehicle","Trip ID","Trips (7D)",hdr("Shift score ▾","shift"),hdr("Safety score ▾","safety"),hdr("Triggers / reasons ▾","trig"),hdr("Severity ▾","sev"),hdr("Councelling status ▾","cs")];
+  const cb = (on, attr) => `<button class="cb ${on?"on":""}" ${attr} aria-pressed="${on}">${on?IC.cbtick:""}</button>`;
+  const rowHtml = r => {
+    const on = S.sel.has(r.name), fl = isFlag(r.name, r.flag);
+    const cells = sc.flagged ? [
+      cb(on, `data-sel="${esc(r.name)}" aria-label="Select ${esc(r.name)}"`),
+      `<span class="nm">${r.name}</span><span class="idtag">${r.id}</span>`,
+      `<span class="veh">${r.model}</span><span class="plate">${r.plate}</span>`,
+      `<span class="n125">${r.trips}</span>`,
+      `<span class="sc" style="color:${scoreCol(r.shift,"#e8456b")}">${r.shift}</span>`,
+      `<span class="sc" style="color:${scoreCol(r.safety,"#c0264a")}">${r.safety}</span>`,
+      trigHtml(r.pills), sevHtml(r.sev), `<span class="a">${r.cs}</span><span class="b">${r.last}</span>`
+    ] : [
+      cb(on, `data-sel="${esc(r.name)}" aria-label="Select ${esc(r.name)}"`),
+      `<span class="sno">${r.sno}</span>`,
+      `<span class="nm">${r.name}</span><span class="idtag">${r.id}</span>`,
+      `<span class="veh">${r.model}</span><span class="plate">${r.plate}</span>`,
+      `<span class="trip">${r.trip}</span>`, `<span class="n125">${r.trips}</span>`,
+      `<span class="sc" style="color:${scoreCol(r.shift,"#e8456b")}">${r.shift}</span>`,
+      `<span class="sc" style="color:${scoreCol(r.safety,"#c0264a")}">${r.safety}</span>`,
+      `<span style="display:flex;gap:6px">${trigHtml(r.pills)}</span>`, sevHtml(r.sev), stHtml(r.cs)
+    ];
+    if (sc.flagged) cells[6] = `<span style="display:flex;gap:6px">${cells[6]}</span>`;
+    const open = S.open === r.name;
+    return `<div class="row ${open?"open":""}" data-row="${esc(r.name)}">${cells.map((c,i) => `<div class="c${sc.flagged&&i===8?" csr":""}" style="width:${W[i]}px">${c}</div>`).join("")}
+      <button class="flag ${fl?"on":""}" style="left:${flagX}px" data-flag="${esc(r.name)}" aria-label="${fl?"Remove flag":"Flag driver"}">${IC.flagBlk}${IC.flagRed}</button></div>${open ? expandHtml(r) : ""}`;
+  };
+  const toolbar = S.sel.size ? `<div class="tb"><div class="l"><span class="cnt">${S.sel.size} selected</span><button class="clr" data-clear>Clear selection</button>${S.saved?'<span class="saved">Action saved</span>':""}</div>
+      <div class="r"><div class="ta-wrap"><button data-take>Take Action</button></div>${sc.flagged?"":'<button class="flagbtn" data-flagnav>Flag</button>'}</div></div>`
+    : `<div class="tb"><div class="l"><span class="cnt">${sc.count}</span><span class="hint">Click column headings to filter · <button data-reset>Reset filters</button></span></div></div>`;
+  const flagTotal = 44 + flagOrder.filter(n => flags[n]).length - FLAG.filter(r => flags[r[0]] === false).length;
+  const foot = sc.flagged ? `<div class="foot"><span class="t">Showing 1 to ${Math.min(20, vis.length)} of ${flagTotal} flagged drivers</span><div class="pager"><span class="rowsl">Rows</span><span class="pg pgw">10</span><span class="pg pgw on">20</span><span class="pg pgw">50</span><span style="width:10px"></span><span class="pg">‹</span><span class="pg on">1</span><span class="pg">2</span><span class="pg">3</span><span class="pg">›</span></div></div>`
+    : `<div class="foot"><span class="t">${sc.foot}</span><div class="pager">${sc.pages.map((p,i) => `<span class="pg ${i===1?"on":""} ${p==="…"?"dots":""}">${p}</span>`).join("")}</div></div>`;
+  return `<div class="app-inner" style="display:flex;width:1680px;height:1080px">${leftMenu("register")}<div class="main">
+    ${topbars("Last 12 weeks")}
+    <div class="ph"><h1>Driver Register</h1><p>Fleet roster with live safety signals. Pick a flagged or due driver and start counselling from here.</p></div>
+    <div class="tabsrow"><div class="tabs">${TABS.map(([k,l]) => `<button class="tab ${k===key?"on":""}" data-nav="${k}">${l}</button>`).join("")}</div>
+      <div class="tright"><label class="rsearch">${IC.srch("#8F8F8F")}<input id="rq" placeholder="Search driver, cab, vendor..." value="${esc(S.q)}" autocomplete="off"></label><div class="fbtn">${IC.filt}</div></div></div>
+    <div class="wrap"><div class="card">
+      ${toolbar}
+      <div class="thead">${H.map((h,i) => `<div class="c" style="width:${W[i]}px">${i===0 ? cb(allSel, 'data-selall aria-label="Select all visible drivers"') : h}</div>`).join("")}</div>
+      <div class="rows" id="rows">${vis.map(rowHtml).join("")}${vis.length ? "" : '<div class="empty">No drivers match these filters. Reset filters to see the full list.</div>'}</div>
+      ${foot}
+      ${S.open && vis.some(r => r.name === S.open) ? '<div class="tscrim" data-collapse aria-hidden="true"></div>' : ""}
+    </div></div>
+    <div class="bottom"></div>
+  </div></div>`;
+}
+
+
+/* ---------- Expanded row ---------- */
+const XCOL = {"Rash driving":"#e8456b", DMS:"#e0b400", SOS:"#c0264a", Overspeeding:"#f2a33a", "Driver fatigue":"#7b68d6"};
+const XTAG = {SOS:["#c0264a","#ffffff"], DMS:["#fff4cc","#8a6a00"], Overspeeding:["#fdebd6","#9a5a00"], "Rash driving":["#fce8ee","#c0264a"], "Driver fatigue":["#e8e4f8","#4a3a9a"]};
+const VENDORS2 = ["Metro Cabs","SkyCabs Prime","CityGo","QuickFleet","SafeWheels","Urban Wheels"];
+const ROUTES = ["Whitefield → Manyata","Koramangala → Hebbal","Electronic City → MG Road","Indiranagar → Airport","HSR Layout → Bellandur","Marathahalli → Yeshwanthpur"];
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const hsh = s => { let h = 7; for (const c of s) h = (h * 31 + c.charCodeAt(0)) % 9973; return h; };
+function xdata(r){
+  const h = hsh(r.name);
+  const counts = {}; if (r.name === "Devraj Kumar") { counts["Rash driving"] = 3; counts.DMS = 2; counts.SOS = 1; } else r.pills.forEach(p => { if (p === "+1") return; const k = Object.keys(XCOL).find(k => p.startsWith(k)); const m = p.match(/x(\d+)/); counts[k] = (counts[k]||0) + (m ? +m[1] : 1); });
+  const tripNo = r.trip || (ALL.find(a => a[1] === r.name) || [])[5] || ("TRP-" + (48000 + h % 300));
+  const delta = r.sev === "Critical" ? 28 : r.sev === "Pattern" ? 12 : -4;
+  const start = Math.min(100, Math.max(20, r.safety + delta));
+  const per = r.trips / 7; const days = [0,1,2,3,4,5,6].map(i => Math.max(1, Math.round(per + ((h >> i) % 3) - 1))); days[2] += r.trips - days.reduce((a,b)=>a+b,0); days[2] = Math.max(1, days[2]);
+  return { counts, tripNo, start, days, since:`${MONTHS[h % 12]} ${2019 + h % 5}`, vendor: VENDORS2[h % 6], route: ROUTES[h % 6] };
+}
+function timelineSvg(counts){
+  const x = w => (5.875 + (w-1) * 34.083).toFixed(2);
+  let g = `<path d="M5.875 13.95H380.8" stroke-width="1.47" stroke="#E6E6E6"/>`;
+  for (let w = 1; w <= 12; w++) g += `<path d="M${x(w)} 11.01V16.89" stroke-width="0.98" stroke="#D9D9D9"/>`;
+  const ev = []; const order = ["Rash driving","Overspeeding","Driver fatigue","DMS","SOS"];
+  order.forEach(k => { const n = counts[k] || 0; for (let i = 0; i < n; i++) ev.push([k, k === "SOS" ? 12 : k === "DMS" ? 12 - (n - 1 - i) : (k === "Rash driving" ? 2 + i : k === "Overspeeding" ? 3 + i * 2 : 5 + i * 2)]); });
+  const st = {};
+  ev.forEach(([k, w]) => { w = Math.max(1, Math.min(12, w)); const s = st[w] = (st[w]||0); st[w]++; g += `<circle cx="${x(w)}" cy="${(13.95 - s * 8.81).toFixed(2)}" r="4.4" fill="${XCOL[k]}" stroke="white" stroke-width="1.47"/>`; });
+  return `<svg width="100%" height="21" viewBox="0 0 387 21" fill="none" preserveAspectRatio="none" style="overflow:visible">${g}</svg>`;
+}
+function sparkSvg(a, b){
+  const pts = Array.from({length:12}, (_,i) => a + (b - a) * i / 11);
+  const hi = Math.max(a, b, 75) + 2, lo = Math.min(a, b, 75) - 2, y = v => (2 + (hi - v) / (hi - lo) * 24).toFixed(2);
+  const col = b < a ? "#E8456B" : "#0E7A33", end = b < a ? "#C0264A" : "#0E7A33";
+  return `<svg width="140" height="28" viewBox="0 0 140 28" fill="none" style="overflow:visible"><path d="M0 ${y(75)}H140" stroke="#22A55B" stroke-dasharray="3.04 3.04"/><path d="M${pts.map((v,i)=>`${4+i*12} ${y(v)}`).join(" L")}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="${col}"/><circle cx="136" cy="${y(b)}" r="3" fill="${end}"/></svg>`;
+}
+function barsSvg(days){
+  const mx = Math.max(...days);
+  return `<svg width="140" height="28" viewBox="0 0 140 28" fill="none">${days.map((v,i) => { const hgt = Math.round(v / mx * 24); return `<rect x="${4 + i*19}" y="${28 - hgt}" width="12" height="${hgt}" rx="2" fill="#034373"/>`; }).join("")}</svg>`;
+}
+function expandHtml(r){
+  const isDev = r.name === "Devraj Kumar";
+  const x = xdata(r);
+  const days = isDev ? [5,4,6,5,3,6,4] : x.days;
+  const start = isDev ? 78 : x.start, end = r.safety === 52 && isDev ? 50 : (isDev ? 50 : r.safety);
+  const diff = end - start;
+  const ini = r.name.split(" ").map(w => w[0]).join("").slice(0,2);
+  const keys = ["Rash driving","Overspeeding","Driver fatigue","DMS","SOS"].filter(k => x.counts[k]), total = keys.reduce((a,k) => a + x.counts[k], 0), mx = Math.max(1, ...keys.map(k => x.counts[k]));
+  const tagsHtml = r.pills.filter(p => p !== "+1").map(p => { const k = Object.keys(XTAG).find(k => p.startsWith(k)); return `<span class="xtag" style="background:${XTAG[k][0]};color:${XTAG[k][1]}">${p}</span>`; }).join("");
+  const sevTag = SEV[r.sev] ? `<span class="xtag" style="background:${SEV[r.sev][0]};color:${SEV[r.sev][1]}">${r.sev}</span>` : "";
+  const status = isDev ? "Critical · Suspended since 23 Oct" : `${r.sev} · ${r.cs}`;
+  const statusCol = (r.sev === "Critical" || r.cs === "Suspended") ? "#c0264a" : "#0f0f0f";
+  const recent = isDev ? "SOS + 2 DMS in last 7 days" : (x.counts.SOS || x.counts.DMS) ? [x.counts.SOS ? "SOS" : "", x.counts.DMS ? `${x.counts.DMS > 1 ? x.counts.DMS + " " : ""}DMS` : ""].filter(Boolean).join(" + ") + " in last 7 days" : "";
+  const coun = isDev || r.cs !== "No action" ? `<b>${isDev ? "12 Oct · Anita Rao · Warning issued" : `${10 + hsh(r.name) % 12} Oct · Anita Rao · ${r.cs}`}</b><span class="sm">${isDev ? "Reviewed harsh braking and phone use on night shifts. Agreed to mount phone, cap shifts at 10h and take defensive driving refresher." : ({"Suspended":"Suspended after repeat critical events. Trips paused until counselling is completed.","Warning issued":"Formal warning on repeat events. Agreed to a defensive driving refresher before the next review.","Under watch":"Placed under watch. Trips are reviewed weekly for repeat events.","Appreciated":"Recognised for consistent safe driving and on-time pickups."})[r.cs] || ""}</span>` : `<b>No sessions on record</b><span class="sm"></span>`;
+  return `<div class="xr" data-xr>
+    <div class="xh"><div class="xav">${ini}</div>
+      <div class="xt"><div class="l1"><b>${r.name}</b><span class="xtag" style="background:#f2f2f2;color:#5e5e5e">${r.id}</span>${sevTag}</div>
+        <div class="l2">${isDev ? "Driver since Mar 2021 · Bengaluru depot · Vendor: Metro Cabs" : `Driver since ${x.since} · Bengaluru depot · Vendor: ${x.vendor}`}</div></div>
+      <div class="spc"></div>
+      <div class="xacts"><button class="xb1" data-profile="${esc(r.name)}">Open full profile</button><button class="xb2" data-clog="${esc(r.name)}">Counselling log</button><button class="xcol" data-collapse aria-label="Collapse"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3.5 8.75L7 5.25L10.5 8.75" stroke-width="1.28" stroke-linecap="round" stroke-linejoin="round" stroke="#0F0F0F"/></svg></button></div>
+    </div>
+    <div class="xcols">
+      <div class="xp"><div class="xcap">Driver and shift</div><div class="xbody">
+        <div class="xkv"><span>Driver ID</span><span>${r.id}</span></div>
+        <div class="xkv"><span>Vehicle</span><span>${r.model} · ${r.plate}</span></div>
+        <div class="xkv"><span>Trip</span><span>${isDev ? "TRP-48213 · Whitefield → Manyata" : `${x.tripNo} · ${x.route}`}</span></div>
+        <div class="xkv"><span>Status</span><span style="color:${statusCol}">${status}</span></div></div></div>
+      <div class="xp"><div class="xhd"><div class="ti"><span class="xcap">Triggers</span><b>${total} in 12 wks</b></div><div class="xtags">${tagsHtml}</div></div>
+        ${keys.length ? `<div class="xbars">${keys.map(k => `<div class="xbar"><span class="nm2">${k}</span><span class="tr2"><i style="width:${(x.counts[k]/mx*91.3).toFixed(1)}%;background:${XCOL[k]}"></i></span><span class="ct">${x.counts[k]}</span></div>`).join("")}</div>
+        <div class="xtl">${timelineSvg(x.counts)}<div class="xax"><span>W1</span><span class="m">${recent}</span><span>W12</span></div></div>` : `<div class="xkv"><span style="width:auto">No triggers in the last 12 weeks.</span></div>`}</div>
+      <div class="xp"><div class="xcap">Performance</div><div class="xbody" style="gap:18px">
+        <div class="xmet"><div class="tx"><span>Score trend, 12 wks</span><b style="color:${diff < 0 ? "#c0264a" : "#0e7a33"}">${diff < 0 ? "▼" : "▲"} ${Math.abs(diff)} pts · ${start} → ${end}</b></div>${sparkSvg(start, end)}</div>
+        <div class="xmet"><div class="tx"><span>Trips this week</span><b>${r.trips} trips · avg ${(r.trips/7).toFixed(1)} / day</b></div>${barsSvg(days)}</div></div></div>
+    </div>
+    <div class="xcn"><span class="xcap">Last counselling</span>${coun}</div>
+  </div>`;
+}
+
+/* ---------- Driver profile (Overview V2) + Counselling log ---------- */
+const EVENTS = [["Week 4","-3 pts","Third rash driving event on the KA-03 corridor",[227.3,84.7],[127.3,61.7]],["Week 7","-2 pts","Night shifts rise to 18% of trips; two overspeeding events",[434.5,121.1],[334.5,98.1]],["Week 10","-2 pts","Police verification due and fatigue limit passed on 3 days",[641.8,121.1],[541.8,98.1]],["Week 12","-1 pts","At-fault SOS and case INV-2041 opened",[780,157.6],[654,134.6]]];
+const SST = '<svg width="800" height="230" viewBox="0 0 800 230" fill="none"><path d="M20 72.57H780" stroke="#16C34A" stroke-opacity="0.6" stroke-dasharray="2 2"/><text fill="#0E7A33" font-family="Inter" font-size="9" x="707.27" y="67.34">Fleet average 74</text><path d="M20 60.4L89.1 72.6L158.2 48.3L227.3 84.7L296.4 96.9H365.5L434.5 121.1L503.6 109L572.7 133.3L641.8 121.1L710.9 145.4L780 157.6V202H20V60.4Z" fill="#F2A33A" fill-opacity="0.1"/><path d="M20 60.4L89.1 72.6L158.2 48.3L227.3 84.7L296.4 96.9H365.5L434.5 121.1L503.6 109L572.7 133.3L641.8 121.1L710.9 145.4L780 157.6" stroke-width="2.4" stroke-linejoin="round" stroke="#F2A33A"/><g stroke="#E0E0E0" stroke-dasharray="1.47 1.47"><path d="M227.27 84.71V202"/><path d="M434.55 121.14V202"/><path d="M641.82 121.14V202"/><path d="M780 157.57V202"/></g><g font-family="Inter" font-size="10" font-weight="bold" fill="white"><circle cx="227.27" cy="84.71" r="9" fill="#0F0F0F"/><text x="224.83" y="87.85">1</text><circle cx="434.55" cy="121.14" r="9" fill="#0F0F0F"/><text x="431.4" y="124.28">2</text><circle cx="641.82" cy="121.14" r="9" fill="#0F0F0F"/><text x="638.52" y="124.28">3</text><circle cx="780" cy="157.57" r="9" fill="#0F0F0F"/><text x="776.61" y="160.71">4</text></g><g fill="#8A8A8A" font-family="Inter" font-size="10"><text x="12.93" y="219.64">W1</text><text x="81.32" y="219.64">W2</text><text x="150.25" y="219.64">W3</text><text x="219.49" y="219.64">W4</text><text x="288.58" y="219.64">W5</text><text x="357.59" y="219.64">W6</text><text x="426.94" y="219.64">W7</text><text x="495.81" y="219.64">W8</text><text x="564.86" y="219.64">W9</text><text x="631.63" y="219.64">W10</text><text x="701.51" y="219.64">W11</text><text x="769.9" y="219.64">W12</text></g></svg>';
+const BSER = [["over","Overspeeding","#E8456B",[52,76,100,112],"0.13",108.5],["rash","Rash driving","#3B82F6",[88,100,112,118],"0.12",124.5],["drow","Drowsiness","#8B5CF6",[124,130,124,88],"0.17",88.5]];
+function behSvg(sel){
+  const X = [84,326,568,810];
+  let g = '<g stroke="#EDEDED" stroke-dasharray="3 4"><path d="M44 130H850"/><path d="M44 70H850"/><path d="M44 10H850"/></g><path d="M44 190H850" stroke="#E2E2E2"/><g fill="#8A8A8A" font-family="Inter" font-size="11"><text x="27" y="193.5">0</text><text x="13" y="133.5">0.10</text><text x="10" y="73.5">0.20</text><text x="10" y="13.5">0.30</text></g><path d="M44 94H850" stroke-width="2" stroke="#F5B83D" stroke-dasharray="6 5"/>';
+  [...BSER].reverse().forEach(([k,,c,ys,lab,ly]) => { if (sel !== "all" && sel !== k) return;
+    g += `<path d="M${X.map((x,i)=>`${x} ${ys[i]}`).join("L")}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke="${c}"/>` + X.map((x,i)=>`<circle cx="${x}" cy="${ys[i]}" r="4" fill="white" stroke-width="2" stroke="${c}"/>`).join("") + `<text fill="${c}" font-family="Inter" font-size="11" font-weight="500" x="820" y="${ly}">${lab}</text>`; });
+  g += '<g fill="#8A8A8A" font-family="Inter" font-size="11.5"><text x="60" y="213.18">Week 40</text><text x="303" y="213.18">Week 41</text><text x="544" y="213.18">Week 42</text></g><text fill="#0F0F0F" font-family="Inter" font-size="11.5" font-weight="500" x="785.5" y="213.18">Week 43</text>';
+  return `<svg width="866" height="222" viewBox="0 0 866 222" fill="none">${g}</svg>`;
+}
+const SPARK = [
+ ["Safety score","52","#c0264a","▼ 9 vs previous","#c0264a","#E8456B","M4 12.4L16.9 10.6L29.8 18.1L42.7 10.6L55.6 21.9L68.5 18.1H81.5L94.4 25.7L107.3 23.8L120.2 29.4L133.1 25.7L146 29.4",29.4],
+ ["Distraction","78","#0e7a33","▲ 3 vs previous","#0e7a33","#16C34A","M4 23.9L16.9 18.7L29.8 23.9L42.7 13.5L55.6 26.5L68.5 18.7L81.5 13.5L94.4 21.3L107.3 16.1L120.2 23.9L133.1 13.5L146 16.1",16.1],
+ ["Drowsiness","70","#8a6a00","▼ 4 vs previous","#c0264a","#F2A33A","M4 16.6L16.9 12.1L29.8 21.1L42.7 12.1L55.6 23.4L68.5 18.9L81.5 16.6L94.4 25.7L107.3 21.1L120.2 27.9L133.1 23.4L146 25.7",25.7],
+ ["SOS","64","#8a6a00","▼ 2 vs previous","#c0264a","#F2A33A","M4 17.6L16.9 12.7L29.8 20L42.7 12.7L55.6 24.9L68.5 17.6L81.5 15.1L94.4 22.4L107.3 17.6L120.2 27.3L133.1 20L146 22.4",22.4],
+ ["Rash Driving","72","#8a6a00","▲ 1 vs previous","#0e7a33","#F2A33A","M4 21.3L16.9 16.1L29.8 23.9L42.7 13.5L55.6 26.5L68.5 18.7L81.5 13.5L94.4 21.3L107.3 16.1L120.2 23.9L133.1 16.1L146 18.7",18.7],
+ ["Overspeeding","80","#0e7a33","▲ 2 vs previous","#0e7a33","#16C34A","M4 23.9L16.9 18.7L29.8 26.5L42.7 13.5L55.6 26.5L68.5 18.7L81.5 16.1L94.4 23.9L107.3 18.7L120.2 23.9L133.1 16.1L146 18.7",18.7],
+];
+const sparkCard = ([t,v,vc,dl,dc,lc,path,ey]) => `<div class="pcat"><div class="t">${t}</div><div class="sv"><div class="n"><b style="color:${vc}">${v}</b><span style="color:${dc}">${dl}</span></div><svg width="150" height="40" viewBox="0 0 150 40" fill="none"><path d="${path}V40H4Z" fill="${lc}" fill-opacity="0.12"/><path d="${path}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="${lc}"/><circle cx="146" cy="${ey}" r="3" fill="${lc}"/></svg></div></div>`;
+const LOG = [["14 Nov 2026","At-fault SOS follow-up","Defensive driving coaching","Meera Pillai","Scheduled","Coaching booked after the 28 Oct SOS. Focus on signal junction braking."],["29 Oct 2026","At-fault SOS","One-to-one counselling","Meera Pillai","Completed","Driver explained the sudden stop. Agreed to keep to 50 km/h on the corridor."],["22 Oct 2026","Rash driving pattern","One-to-one counselling","Meera Pillai","Completed","Third rash driving event at the same junction. Reviewed the trace together."],["10 Oct 2026","Overspeeding, night trip","Verbal warning","Arvind Rao","Completed","Warned about night-time speed limits. Driver acknowledged."],["25 Sep 2026","Driver fatigue, long shift","One-to-one counselling","Arvind Rao","Completed","Fatigue alert on a 9h shift. Driver rested and was briefed on break rules."],["04 Sep 2026","Rash driving at junction","Safety briefing","Meera Pillai","Completed","Briefed on junction scanning and safe following distance."],["14 Aug 2026","DMS alerts, 3 weeks","One-to-one counselling","Arvind Rao","No show","Driver missed the session. Rebooked for 21 Aug."],["02 Jul 2026","Driver fatigue x4","Verbal warning","Arvind Rao","Completed","DMS alerts on the early shift. Agreed to take a rest break between trips."]];
+const OUT = {Scheduled:["#fff4cc","#8a6a00"], Completed:["#e6f7eb","#0e7a33"], "No show":["#fce8ee","#c0264a"]};
+function profHeader(withCoach){
+  const d = S.profile || {name:"Devraj Kumar", id:"DRV-2208", model:"Maruti Dzire", plate:"KA-03-MB-8120"};
+  const ini = d.name.split(" ").map(w=>w[0]).join("").slice(0,2);
+  return `<div class="crumb"><button data-back>Driver register</button><span>/</span><b>${d.name}</b></div>
+    <div class="hcard"><div class="hav">${ini}</div><div class="hinfo">
+      <div class="l1"><b>${d.name}</b><span class="htag" style="background:#fce8ee;color:#c0264a">Flagged</span><span class="htag" style="background:#e6f7eb;color:#0e7a33">On duty</span><span class="htag" style="background:#f2f2f2;color:#5e5e5e">Face match verified</span></div>
+      <div class="l2">${d.id} · 34 yrs · Joined Mar 2023 · 8 yrs driving experience · Full-time, SafeWheels Fleet Services</div>
+      <div class="l3">${d.model} · ${d.plate}   ·   +91 98••• ••214   ·   Emergency: Sunita Kumar (spouse)</div></div>
+      <div class="hbtns"><button class="hb">Download report</button><button class="hb" style="background:#c0264a;border-color:#e0e0e0;color:#fff">Suspend</button></div></div>`;
+}
+function profile(){
+  const rng = k => `<div class="rng">${["1D","5D","1W","1M","6M","1Y","YTD"].map(r => `<button class="${S.rng[k]===r?"on":""}" data-rng="${k}:${r}">${r}</button>`).join("")}</div>`;
+  const radio = (k,l,c) => `<button class="pr ${S.bsel===k?"on":""}" data-bsel="${k}" style="--c:${c}"><i></i>${l}</button>`;
+  return `<div class="app-inner" style="display:flex;width:1680px;height:1183px">${leftMenu("register")}<div class="main">
+    ${topbars("Last 12 weeks")}
+    <div class="pc">${profHeader(false)}
+      <div class="ptabs"><button class="ptab on">Overview</button><button class="ptab" data-nav="counselling">Councelling logs</button></div>
+      <div class="kstrip"><div><span class="kl2">COMPOSITE SAFETY SCORE</span><span class="kv2" style="color:#8a6a00">67 / 100</span></div><div><span class="kl2">TRIPS</span><span class="kv2">1,284</span></div><div><span class="kl2">TRUE DROWSY ACCIDENTS</span><span class="kv2" style="color:#c0264a">1</span></div><div><span class="kl2">FLEET RANK</span><span class="kv2" style="color:#c0264a">412 of 520</span></div></div>
+      <div class="pcols"><div class="pleft">
+        <div class="pcard" style="height:332px"><div class="phd"><div><h3>Safety Score Trend</h3><p>Overall score by week, with the events that explain each drop</p></div>${rng("s")}</div>
+          <div style="height:230px">${SST}</div>
+          ${EVENTS.map((e,i) => `<span class="mk" data-ev="${i}" style="left:${24+e[3][0]-12}px;top:${78+e[3][1]-12}px"></span><div class="ppop" id="ev${i}" style="left:${e[4][0]}px;top:${e[4][1]}px"><div class="h"><span class="wk"><span class="bd">${i+1}</span>${e[0]}</span><span class="tg">${e[1]}</span></div><div class="tx">${e[2]}</div></div>`).join("")}
+        </div>
+        <div class="pcard"><div class="phd"><div><h3>Driver Behavioral Trend</h3><p>Rolling weekly incidence across 48,200 operational vehicle kilometers</p></div>${rng("b")}</div>
+          <div class="pdiv"></div><div class="pdiv"></div>
+          <div class="plg"><div class="prg">${radio("all","All","#0f0f0f")}${radio("over","Overspeeding","#e8456b")}${radio("rash","Rash driving","#3b82f6")}${radio("drow","Drowsiness","#8b5cf6")}</div>
+            <span class="pref"><svg width="16" height="4" viewBox="0 0 16 4"><line x1="1" y1="2" x2="15" y2="2" stroke="#F5B83D" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 3"/></svg>Average safety</span></div>
+          ${behSvg(S.bsel)}
+        </div>
+      </div>
+      <div class="prail">${SPARK.map(sparkCard).join("")}</div></div>
+    </div>
+  </div></div>`;
+}
+function counselling(){
+  const d = S.profile || {name:"Devraj Kumar"};
+  const W = [130,240,190,150,130,472];
+  const q = (S.clq || "").toLowerCase();
+  const rows = LOG.filter(r => !q || [r[1],r[3],r[5]].some(x => x.toLowerCase().includes(q)));
+  return `<div class="app-inner" style="display:flex;width:1680px;height:1084px">${leftMenu("register")}<div class="main">
+    ${topbars("Last 12 weeks")}
+    <div class="pc cl">${profHeader(true)}
+      <div class="ptabs"><button class="ptab" data-nav="profile">Overview</button><button class="ptab on">Councelling logs</button></div>
+      <div class="clf"><div class="chip"><span>Period</span><b>Last 90 days</b></div><div class="chip"><span>Counsellor</span><b>All counsellors</b></div><div class="chip"><span>Outcome</span><b>All outcomes</b></div>
+        <label class="clsearch">${IC.srch("#8A8A8A")}<input id="clq" placeholder="Search reason, counsellor or notes" value="${esc(S.clq||"")}" autocomplete="off"></label></div>
+      <div class="clog"><div style="padding-top:19px"><h3>Counselling log</h3><p class="sub">8 sessions · last 90 days · ${d.name}</p></div>
+        <div class="clt"><div class="clh">${["DATE","REASON","SESSION TYPE","COUNSELLED BY","OUTCOME","NOTES"].map((h,i)=>`<div style="width:${W[i]}px">${h}</div>`).join("")}</div>
+          ${rows.map(r => `<div class="clr"><div class="dt" style="width:${W[0]}px">${r[0]}</div><div class="rs" style="width:${W[1]}px">${r[1]}</div><div class="ss" style="width:${W[2]}px">${r[2]}</div><div class="cb2" style="width:${W[3]}px">${r[3]}</div><div style="width:${W[4]}px"><span class="htag" style="background:${OUT[r[4]][0]};color:${OUT[r[4]][1]}">${r[4]}</span></div><div class="nt" style="width:${W[5]}px">${r[5]}</div></div>`).join("")}
+          ${rows.length ? "" : '<div class="clr"><div class="nt" style="width:auto">No sessions match this search.</div></div>'}</div></div>
+    </div>
+  </div></div>`;
+}
+/* ---------- Overlays ---------- */
+function overlays(){
+  let h = "";
+  if (S.pop) { const f = FILTERS[S.pop]; const cur = S.filters[S.pop] || "All";
+    h += `<div class="ovl show" data-close-pop><div class="pop" style="left:${f.pos[0]}px;top:${f.pos[1]}px" role="menu">
+      <h4>${f.title}</h4><div class="cur">${cur}</div>
+      <button class="opt ${cur==="All"?"on":""}" data-opt="">All</button>
+      ${f.opts.map(o => `<button class="opt ${cur===o?"on":""}" data-opt="${o}">${o}</button>`).join("")}
+      <button class="opt reset" data-opt-reset>Reset all filters</button></div></div>`; }
+  if (S.modal) {
+    const A = [["appreciate","Send appreciation","Note from manager"],["watch","Put under watch","Monitor closely"],["warn","Issue warning","Formal notice"],["suspend","Suspend","Stop assigning trips"]];
+    const en = allowed(); const daysOn = S.act === "warn" || S.act === "suspend";
+    h += `<div class="ovl show"><div class="dim" data-close-modal></div><div class="dlg" role="dialog" aria-modal="true" aria-labelledby="dt">
+      <div class="dh"><div><h2 id="dt">Take action</h2><p>Choose the action, how long it applies and add a comment.</p></div><button class="xb" data-close-modal aria-label="Close">${IC.x}</button></div>
+      <div class="grp"><div class="lab">ACTION</div><div class="acts">${A.map(([k,t,s]) => `<button class="act ${en.includes(k)?"":"dis"} ${S.act===k?"on":""}" data-act="${k}" ${en.includes(k)?"":'aria-disabled="true"'}><span class="rd"></span><span><b>${t}</b><small>${s}</small></span></button>`).join("")}</div></div>
+      <div class="grp ${daysOn?"":"off"}" ${daysOn?"":'aria-disabled="true"'}><div class="lab">NUMBER OF DAYS</div><div class="days"><div class="step"><button data-step="-1" aria-label="Fewer days">−</button><div class="v">${S.days}</div><button data-step="1" aria-label="More days">+</button></div><span class="dl">days</span>
+        <div class="pres">${[7,14,30,60,90].map(n => `<button class="pre ${S.days===n?"on":""}" data-days="${n}">${n} d</button>`).join("")}</div></div></div>
+      <div class="grp"><label class="lab" for="cm">COMMENT</label><textarea id="cm">${esc(S.comment)}</textarea></div>
+      <div class="df"><button class="b2" style="opacity:0;pointer-events:none" tabindex="-1" aria-hidden="true">Cancel</button><div style="display:flex;gap:10px"><button class="b2 k" style="background:#000;border-color:#000;height:36px" data-save>${IC.dlw}Download PDF and Save</button></div></div>
+    </div></div>`;
+  }
+  return h;
+}
+
+/* ---------- Render + routing ---------- */
+let rowsScroll = 0;
+function render(){
+  const r = document.getElementById("rows"); if (r) rowsScroll = r.scrollTop;
+  app.innerHTML = (S.route === "overview" ? overview() : S.route === "profile" ? profile() : S.route === "counselling" ? counselling() : register(S.route)) + overlays();
+  const cq = document.getElementById("clq"); if (cq) cq.oninput = e => { S.clq = e.target.value; const pos = e.target.selectionStart; render(); const n = document.getElementById("clq"); n.focus(); n.setSelectionRange(pos,pos); };
+  document.querySelectorAll(".mk").forEach(m => { const pop = document.getElementById("ev" + m.dataset.ev); m.onmouseenter = () => pop.classList.add("show"); m.onmouseleave = () => pop.classList.remove("show"); });
+  const r2 = document.getElementById("rows"); if (r2) r2.scrollTop = rowsScroll;
+  const xr = document.querySelector(".xr"); if (xr && S.justOpened) { S.justOpened = false; xr.scrollIntoView({block:"nearest"}); }
+  const q = document.getElementById("rq");
+  if (q) q.oninput = e => { S.q = e.target.value; const pos = e.target.selectionStart; render(); const n = document.getElementById("rq"); n.focus(); n.setSelectionRange(pos,pos); };
+}
+function go(route){ S.open = null; S.sel.clear(); S.saved = false; S.pop = null; rowsScroll = 0; if (location.hash.slice(1) !== route) location.hash = route; else { S.route = route; render(); } }
+const routeOf = h => (h === "overview" || h === "profile" || h === "counselling" || SCREENS[h]) ? h : "overview";
+window.addEventListener("hashchange", () => { const h = location.hash.slice(1); S.route = routeOf(h); if (SCREENS[S.route]) S.lastReg = S.route; S.sel.clear(); S.saved = false; S.pop = null; S.modal = false; rowsScroll = 0; render(); });
+function fit(){ const s = Math.min(1, window.innerWidth / 1680); app.style.zoom = s; }
+window.addEventListener("resize", fit);
+
+app.addEventListener("click", e => {
+  const pb = e.target.closest("[data-profile],[data-clog]");
+  if (pb) { const n = pb.dataset.profile || pb.dataset.clog; const src = document.querySelector(`[data-row="${CSS.escape(n)}"]`); const row = src ? { name:n, id: src.querySelector(".idtag").textContent, model: src.querySelector(".veh").textContent, plate: src.querySelector(".plate").textContent } : null; S.profile = row; S.lastReg = SCREENS[S.route] ? S.route : S.lastReg; go(pb.dataset.profile ? "profile" : "counselling"); return; }
+  if (e.target.closest("[data-xr]") && !e.target.closest("[data-collapse]")) return;
+  if (e.target.closest("[data-collapse]")) { S.open = null; render(); return; }
+  const t = e.target.closest("button,[data-nav],[data-close-pop]");
+  if (!t) { const row = e.target.closest("[data-row]"); if (row) { S.open = S.open === row.dataset.row ? null : row.dataset.row; S.justOpened = !!S.open; render(); } return; }
+  const d = t.dataset;
+  if (d.back !== undefined) { go(S.lastReg || "all"); return; }
+  if (d.bsel) { S.bsel = d.bsel; render(); return; }
+  if (d.rng) { const [k, v] = d.rng.split(":"); S.rng[k] = v; render(); return; }
+  if (d.nav !== undefined) { if (!d.nav) return; go(d.nav === "register" ? "all" : d.nav === "flagged-nav" ? "flagged" : d.nav); return; }
+  if (d.sel) { S.sel.has(d.sel) ? S.sel.delete(d.sel) : S.sel.add(d.sel); S.saved = false; render(); return; }
+  if (d.selall !== undefined) { const on = t.getAttribute("aria-pressed") === "true"; document.querySelectorAll("[data-sel]").forEach(b => on ? S.sel.delete(b.dataset.sel) : S.sel.add(b.dataset.sel)); S.saved = false; render(); return; }
+  if (d.flag) { e.stopPropagation(); const sc = SCREENS[S.route]; const def = sc.flagged ? 1 : ((sc.rows.find(r => r[1] === d.flag) || [])[12] || 0); const on = !isFlag(d.flag, def); setFlag(d.flag, on); if (!on && sc.flagged) { S.sel.delete(d.flag); if (S.open === d.flag) S.open = null; } render(); return; }
+  if (d.clear !== undefined) { S.sel.clear(); S.saved = false; render(); return; }
+  if (d.reset !== undefined) { S.filters = {}; S.q = ""; render(); return; }
+  if (d.flagnav !== undefined) { [...S.sel].forEach(n => setFlag(n, true)); go("flagged"); return; }
+  if (d.take !== undefined) { S.modal = true; S.act = S.route === "high-performing" ? "appreciate" : "watch"; S.days = 14; S.commentEdited = false; S.comment = "Review the selected drivers after 14 days."; render(); return; }
+  if (d.filter) { S.pop = S.pop === d.filter ? null : d.filter; render(); return; }
+  if (d.opt !== undefined) { e.stopPropagation(); if (d.opt) S.filters[S.pop] = d.opt; else delete S.filters[S.pop]; S.pop = null; render(); return; }
+  if (d.optReset !== undefined) { e.stopPropagation(); S.filters = {}; S.pop = null; render(); return; }
+  if (d.closePop !== undefined && e.target === t) { S.pop = null; render(); return; }
+  if (d.closeModal !== undefined) { S.modal = false; render(); return; }
+  if (d.act) { if (!allowed().includes(d.act)) return; S.act = d.act; syncComment(); render(); return; }
+  if (d.step) { S.days = Math.max(1, S.days + (+d.step)); syncComment(); render(); return; }
+  if (d.days) { S.days = +d.days; syncComment(); render(); return; }
+  if (d.save !== undefined) { S.modal = false; S.saved = true; render(); return; }
+});
+app.addEventListener("input", e => { if (e.target.id === "cm") { S.comment = e.target.value; S.commentEdited = true; } });
+function allowed(){ return S.route === "high-performing" ? ["appreciate"] : S.route === "all" ? ["appreciate","watch","warn","suspend"] : ["watch","warn","suspend"]; }
+function syncComment(){ const cm = document.getElementById("cm"); if (cm) S.comment = cm.value; if (!S.commentEdited) S.comment = `Review the selected drivers after ${S.days} days.`; }
+document.addEventListener("keydown", e => { if (e.key === "Escape" && (S.modal || S.pop || S.open)) { if (S.modal || S.pop) { S.modal = false; S.pop = null; } else S.open = null; render(); } });
+
+S.route = routeOf(location.hash.slice(1)); if (SCREENS[S.route]) S.lastReg = S.route;
+render();
+</script>
+</body>
+</html>
