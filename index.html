@@ -204,7 +204,9 @@ textarea{width:664px;height:87px;background:#fff;border:1px solid var(--line2);b
 .opt.reset{height:26.4px}
 
 /* Expanded row (Driver Register - row expanded - short, trigger charts) */
-.row{cursor:pointer}
+.row{cursor:default}
+.row .nm{cursor:pointer}
+.row .nm:hover{text-decoration:underline;text-underline-offset:2px}
 .row.open{background:#fafafa}
 .xr{background:#fafafb;border-bottom:1px solid #e6e6e6;border-radius:21px;padding:16px 24px;display:flex;flex-direction:column;gap:14px;cursor:default}
 .xh{display:flex;align-items:center;gap:14px;height:48px}
@@ -824,7 +826,7 @@ app.addEventListener("click", e => {
   if (e.target.closest("[data-xr]") && !e.target.closest("[data-collapse]")) return;
   if (e.target.closest("[data-collapse]")) { S.open = null; render(); return; }
   const t = e.target.closest("button,[data-nav],[data-close-pop]");
-  if (!t) { const row = e.target.closest("[data-row]"); if (row) { S.open = S.open === row.dataset.row ? null : row.dataset.row; S.justOpened = !!S.open; render(); } return; }
+  if (!t) { const row = e.target.closest(".row .nm") && e.target.closest("[data-row]"); if (row) { S.open = S.open === row.dataset.row ? null : row.dataset.row; S.justOpened = !!S.open; render(); } return; }
   const d = t.dataset;
   if (d.back !== undefined) { go(S.lastReg || "all"); return; }
   if (d.bsel) { S.bsel = d.bsel; render(); return; }
