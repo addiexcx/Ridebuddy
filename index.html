@@ -87,6 +87,7 @@ input,textarea,[contenteditable]{caret-color:auto}
 .tablex > *{min-width:1340px}
 .row{height:36px;border-bottom:1px solid var(--line);position:relative}
 .row:hover{background:#fafafa}
+.row.selr,.row.selr:hover{background:#E5F0FF}
 .cb{width:16px;height:16px;border-radius:4px;border:1.5px solid #bdbdbd;background:#fff;display:grid;place-items:center}
 .cb.on{background:var(--ink);border-color:var(--ink)}
 .sno{font-size:12px;color:var(--g8a)}
@@ -602,7 +603,7 @@ function register(key){
     ];
     if (sc.flagged) cells[6] = `<span style="display:flex;gap:6px">${cells[6]}</span>`;
     const open = S.open === r.name;
-    return `<div class="row ${open?"open":""}" data-row="${esc(r.name)}">${cells.map((c,i) => `<div class="c${sc.flagged&&i===8?" csr":""}${i===(sc.flagged?2:3)?" vehc":""}" style="width:${W[i]}px"${i===(sc.flagged?2:3)?` title="${esc(r.model)} · ${esc(r.plate)}"`:""}>${c}</div>`).join("")}
+    return `<div class="row ${open?"open":""}${on?" selr":""}" data-row="${esc(r.name)}">${cells.map((c,i) => `<div class="c${sc.flagged&&i===8?" csr":""}${i===(sc.flagged?2:3)?" vehc":""}" style="width:${W[i]}px"${i===(sc.flagged?2:3)?` title="${esc(r.model)} · ${esc(r.plate)}"`:""}>${c}</div>`).join("")}
       <button class="flag ${fl?"on":""}" style="left:${flagX}px" data-flag="${esc(r.name)}" aria-label="${fl?"Remove flag":"Flag driver"}">${IC.flagBlk}${IC.flagRed}</button></div>${open ? expandHtml(r) : ""}`;
   };
   const toolbar = S.sel.size ? `<div class="tb"><div class="l"><span class="cnt">${S.sel.size} selected</span><button class="clr" data-clear>Clear selection</button>${S.saved?'<span class="saved">Action saved</span>':""}</div>
