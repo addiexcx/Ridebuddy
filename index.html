@@ -349,7 +349,8 @@ textarea{width:664px;height:87px;background:#fff;border:1px solid var(--line2);b
 .prail{flex:0 0 clamp(320px, 26vw, 430px);width:auto;min-width:0}
 .w120{flex:0 0 150px;width:150px}
 .clh > div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.c.vehc{overflow:hidden;padding-right:12px}
+.c.vehc{overflow:hidden;padding-right:12px;padding-left:14px;box-sizing:border-box}
+.c.vhd{padding-left:14px;box-sizing:border-box}
 .c.vehc .veh{flex:none}
 .c.vehc .plate{min-width:0;overflow:hidden;text-overflow:ellipsis}
 </style>
@@ -617,7 +618,7 @@ function register(key){
       <div class="tright"><label class="rsearch">${IC.srch("#8F8F8F")}<input id="rq" placeholder="Search driver, cab, vendor..." value="${esc(S.q)}" autocomplete="off"></label><div class="fbtn">${IC.filt}</div></div></div>
     <div class="wrap"><div class="card">
       ${toolbar}
-      <div class="tablex" id="tablex"><div><div class="thead">${H.map((h,i) => `<div class="c" style="width:${W[i]}px">${i===0 ? cb(allSel, 'data-selall aria-label="Select all visible drivers"') : h}</div>`).join("")}</div>
+      <div class="tablex" id="tablex"><div><div class="thead">${H.map((h,i) => `<div class="c${i===(sc.flagged?2:3)?" vhd":""}" style="width:${W[i]}px">${i===0 ? cb(allSel, 'data-selall aria-label="Select all visible drivers"') : h}</div>`).join("")}</div>
       <div class="rows" id="rows">${vis.map(rowHtml).join("")}${vis.length ? "" : '<div class="empty">No drivers match these filters. Reset filters to see the full list.</div>'}</div></div></div>
       ${foot}
       ${S.open && vis.some(r => r.name === S.open) ? '<div class="tscrim" data-collapse aria-hidden="true"></div>' : ""}
