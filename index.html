@@ -76,6 +76,8 @@ input,textarea,[contenteditable]{caret-color:auto}
 .ta-wrap{background:var(--ink);border-radius:8px;padding:3px;display:flex}
 .ta-wrap button{padding:4px 10px;border-radius:6px;color:#fff;font-size:11.5px;font-weight:600;line-height:14px}
 .flagbtn{background:#fff;border:1px solid var(--line2);border-radius:8px;padding:6px 10px;font-size:11.5px;font-weight:500;line-height:14px}
+.dlbtn{display:flex;align-items:center;gap:6px}
+.dlbtn svg{width:13px;height:13px}
 .thead,.row{display:flex;align-items:center;padding:0 10px}
 .thead{height:30px;border-bottom:1px solid var(--line2)}
 .thead .c{font-size:10px;font-weight:500;color:var(--g8a);letter-spacing:.08em;text-transform:uppercase;line-height:12px}
@@ -607,7 +609,7 @@ function register(key){
       <button class="flag ${fl?"on":""}" style="left:${flagX}px" data-flag="${esc(r.name)}" aria-label="${fl?"Remove flag":"Flag driver"}">${IC.flagBlk}${IC.flagRed}</button></div>${open ? expandHtml(r) : ""}`;
   };
   const toolbar = S.sel.size ? `<div class="tb"><div class="l"><span class="cnt">${S.sel.size} selected</span><button class="clr" data-clear>Clear selection</button>${S.saved?'<span class="saved">Action saved</span>':""}</div>
-      <div class="r"><div class="ta-wrap"><button data-take>Take Action</button></div>${sc.flagged?"":'<button class="flagbtn" data-flagnav>Flag</button>'}</div></div>`
+      <div class="r"><div class="ta-wrap"><button data-take>Take Action</button></div>${sc.flagged?"":'<button class="flagbtn" data-flagnav>Flag</button>'}${S.route==="high-performing"?`<button class="flagbtn dlbtn" data-dllist>${IC.dl}Download list</button>`:""}</div></div>`
     : `<div class="tb"><div class="l"><span class="cnt">${sc.count}</span><span class="hint">Click column headings to filter · <button data-reset>Reset filters</button></span></div></div>`;
   const flagTotal = 44 + flagOrder.filter(n => flags[n]).length - FLAG.filter(r => flags[r[0]] === false).length;
   const foot = sc.flagged ? `<div class="foot"><span class="t">Showing 1 to ${Math.min(20, vis.length)} of ${flagTotal} flagged drivers</span><div class="pager"><span class="rowsl">Rows</span><span class="pg pgw">10</span><span class="pg pgw on">20</span><span class="pg pgw">50</span><span style="width:10px"></span><span class="pg">‹</span><span class="pg on">1</span><span class="pg">2</span><span class="pg">3</span><span class="pg">›</span></div></div>`
@@ -840,6 +842,7 @@ app.addEventListener("click", e => {
   if (d.clear !== undefined) { S.sel.clear(); S.saved = false; render(); return; }
   if (d.reset !== undefined) { S.filters = {}; S.q = ""; render(); return; }
   if (d.flagnav !== undefined) { [...S.sel].forEach(n => setFlag(n, true)); go("flagged"); return; }
+  if (d.dllist !== undefined) { downloadList(); return; }
   if (d.take !== undefined) { S.modal = true; S.act = S.route === "high-performing" ? "appreciate" : "watch"; S.days = 7; S.commentEdited = false; S.comment = "Review the selected drivers after 7 days."; render(); return; }
   if (d.filter) { const z = parseFloat(app.style.zoom) || 1, ar = app.getBoundingClientRect(), rc = t.getBoundingClientRect(); S.popPos = [Math.max(12, Math.min((rc.left - ar.left) / z - 12, app.offsetWidth - 262)), (rc.bottom - ar.top) / z + 10]; S.pop = S.pop === d.filter ? null : d.filter; render(); return; }
   if (d.opt !== undefined) { e.stopPropagation(); if (d.opt) S.filters[S.pop] = d.opt; else delete S.filters[S.pop]; S.pop = null; render(); return; }
@@ -852,6 +855,13 @@ app.addEventListener("click", e => {
   if (d.save !== undefined) { S.modal = false; S.saved = true; render(); return; }
 });
 app.addEventListener("input", e => { if (e.target.id === "cm") { S.comment = e.target.value; S.commentEdited = true; } });
+function downloadList(){
+  const heads = [...document.querySelectorAll(".thead .c")].slice(1).map(c => c.textContent.replace(/[▾⌄]/g,"").trim());
+  const rows = [...document.querySelectorAll(".row.selr")].map(r => [...r.querySelectorAll(":scope > .c")].slice(1).map(c => { const n = c.querySelector(".nm"); return n ? n.textContent + " (" + c.querySelector(".idtag").textContent + ")" : (c.getAttribute("title") || c.textContent).replace(/\s+/g," ").trim(); }));
+  const q = v => /[",\n]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v;
+  const csv = [heads, ...rows].map(r => r.map(q).join(",")).join("\n");
+  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], {type:"text/csv"})); a.download = "high-performing-drivers.csv"; document.body.appendChild(a); a.click(); a.remove();
+}
 function allowed(){ return S.route === "high-performing" ? ["appreciate"] : S.route === "all" ? ["appreciate","watch","warn","suspend"] : ["watch","warn","suspend"]; }
 function syncComment(){ const cm = document.getElementById("cm"); if (cm) S.comment = cm.value; if (!S.commentEdited) S.comment = `Review the selected drivers after ${S.days} days.`; }
 document.addEventListener("keydown", e => { if (e.key === "Escape" && (S.modal || S.pop || S.open)) { if (S.modal || S.pop) { S.modal = false; S.pop = null; } else S.open = null; render(); } });
