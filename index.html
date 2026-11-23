@@ -860,7 +860,11 @@ function downloadList(){
   const rows = [...document.querySelectorAll(".row.selr")].map(r => [...r.querySelectorAll(":scope > .c")].slice(1).map(c => { const n = c.querySelector(".nm"); return n ? n.textContent + " (" + c.querySelector(".idtag").textContent + ")" : (c.getAttribute("title") || c.textContent).replace(/\s+/g," ").trim(); }));
   const q = v => /[",\n]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v;
   const csv = [heads, ...rows].map(r => r.map(q).join(",")).join("\n");
-  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], {type:"text/csv"})); a.download = "high-performing-drivers.csv"; document.body.appendChild(a); a.click(); a.remove();
+  const filename = "high-performing-drivers.csv";
+  const blobSave = () => { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], {type:"text/csv"})); a.download = filename; document.body.appendChild(a); a.click(); a.remove(); };
+  if (window.claude && typeof window.claude.use === "function") {
+    window.claude.use("downloads").then(dl => dl ? dl.save({ filename, data: csv }).catch(() => {}) : blobSave()).catch(blobSave);
+  } else blobSave();
 }
 function allowed(){ return S.route === "high-performing" ? ["appreciate"] : S.route === "all" ? ["appreciate","watch","warn","suspend"] : ["watch","warn","suspend"]; }
 function syncComment(){ const cm = document.getElementById("cm"); if (cm) S.comment = cm.value; if (!S.commentEdited) S.comment = `Review the selected drivers after ${S.days} days.`; }
